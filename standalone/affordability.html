@@ -1,0 +1,853 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>SemaKare — Affordability</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    html, body { margin: 0; background: #fff; color: var(--sk-fg); font-family: var(--sk-font-sans); }
+    * { box-sizing: border-box; }
+    button { font: inherit; }
+    a { color: inherit; }
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+    input[type=number] { -moz-appearance: textfield; }
+/* =========================================================
+   Semakare Design System — colors & type tokens
+   Import this file wherever design tokens are needed.
+   ========================================================= */
+
+/* Fonts — DM Sans chosen as closest Google-Fonts match for the
+   rounded, humanist geometric sans used in the Semakare reference.
+   Flagged to user: true brand font file not provided. */
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&display=swap");
+
+:root {
+  /* ---------- Brand palette ---------- */
+  --sk-purple-950: #2a0e6e;   /* deepest — hover / pressed */
+  --sk-purple-900: #3a1687;   /* primary button fill */
+  --sk-purple-800: #431f94;   /* headline purple, primary brand */
+  --sk-purple-700: #5a2fb5;   /* logo letter fill */
+  --sk-purple-600: #7a4ed0;   /* accent on chips / illustrations */
+  --sk-purple-300: #c3b2ea;   /* soft blob / decoration */
+  --sk-purple-100: #ede8f7;   /* faint tint background */
+
+  --sk-blue-600:   #2f8fd4;   /* "Simpler" accent */
+  --sk-blue-500:   #4da6e8;   /* link / info accent */
+  --sk-blue-300:   #a7d4f3;   /* soft blob */
+  --sk-blue-100:   #e4eef6;   /* section wash (alt) */
+  --sk-blue-50:    #eaf6ff;   /* section wash / footer */
+
+  --sk-teal-400:   #29c3c3;   /* data / progress-good */
+  --sk-green-500:  #2dbf6b;   /* WhatsApp / success */
+  --sk-amber-500:  #f6b93b;   /* warning / partial */
+  --sk-red-500:    #e8553d;   /* missed / alert */
+
+  /* ---------- Neutrals ---------- */
+  --sk-ink:        #0f1424;   /* strongest text */
+  --sk-ink-2:      #1a2136;   /* body heading */
+  --sk-gray-700:   #4a5165;   /* body copy */
+  --sk-gray-500:   #6b7280;   /* secondary copy */
+  --sk-gray-400:   #9aa0ae;   /* tertiary / placeholder */
+  --sk-gray-300:   #d4d6dd;   /* hairline borders */
+  --sk-gray-200:   #e4e5ea;   /* card outline */
+  --sk-gray-150:   #eceaef;   /* feature card fill (warm gray) */
+  --sk-gray-100:   #f3f4f7;   /* surface alt */
+  --sk-gray-50:    #f8f9fb;   /* page alt */
+  --sk-white:      #ffffff;
+
+  /* ---------- Semantic roles ---------- */
+  --sk-bg:               var(--sk-white);
+  --sk-bg-soft:          var(--sk-blue-50);     /* big section wash */
+  --sk-bg-card:          var(--sk-gray-150);    /* warm neutral feature card */
+  --sk-bg-faq:           var(--sk-blue-50);     /* expanded FAQ fill */
+  --sk-fg:               var(--sk-ink);
+  --sk-fg-muted:         var(--sk-gray-700);
+  --sk-fg-subtle:        var(--sk-gray-500);
+  --sk-accent:           var(--sk-purple-800);
+  --sk-accent-strong:    var(--sk-purple-900);
+  --sk-accent-pressed:   var(--sk-purple-950);
+  --sk-link:             var(--sk-blue-500);
+  --sk-border:           var(--sk-gray-300);
+  --sk-border-soft:      var(--sk-gray-200);
+
+  /* ---------- Radii ---------- */
+  --sk-r-xs: 6px;
+  --sk-r-sm: 10px;
+  --sk-r-md: 16px;
+  --sk-r-lg: 20px;
+  --sk-r-xl: 28px;
+  --sk-r-2xl: 36px;
+  --sk-r-pill: 999px;
+
+  /* ---------- Shadows ---------- */
+  --sk-shadow-xs:   0 1px 2px rgba(15,20,36,0.05);
+  --sk-shadow-sm:   0 2px 6px rgba(15,20,36,0.06);
+  --sk-shadow-md:   0 8px 24px rgba(15,20,36,0.08);
+  --sk-shadow-lg:   0 20px 50px rgba(67,31,148,0.12);
+  --sk-shadow-btn:  0 8px 22px rgba(67,31,148,0.28);
+
+  /* ---------- Spacing scale (4-pt) ---------- */
+  --sk-s-1: 4px;
+  --sk-s-2: 8px;
+  --sk-s-3: 12px;
+  --sk-s-4: 16px;
+  --sk-s-5: 20px;
+  --sk-s-6: 24px;
+  --sk-s-8: 32px;
+  --sk-s-10: 40px;
+  --sk-s-12: 48px;
+  --sk-s-16: 64px;
+  --sk-s-20: 80px;
+  --sk-s-24: 96px;
+
+  /* ---------- Type tokens ---------- */
+  --sk-font-sans: "DM Sans", "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --sk-font-display: "DM Sans", "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --sk-fs-display: clamp(40px, 4.4vw, 60px);
+  --sk-fs-h1: clamp(34px, 3.4vw, 48px);
+  --sk-fs-h2: clamp(28px, 2.6vw, 38px);
+  --sk-fs-h3: 24px;
+  --sk-fs-h4: 20px;
+  --sk-fs-body-lg: 18px;
+  --sk-fs-body: 16px;
+  --sk-fs-body-sm: 15px;
+  --sk-fs-caption: 13px;
+  --sk-fs-micro: 12px;
+
+  --sk-lh-tight: 1.1;
+  --sk-lh-snug: 1.25;
+  --sk-lh-body: 1.55;
+  --sk-lh-loose: 1.7;
+
+  --sk-tracking-tight: -0.015em;
+  --sk-tracking-normal: 0;
+  --sk-tracking-wide: 0.04em;
+}
+
+/* =========================================================
+   Semantic type classes — use these instead of raw tokens
+   ========================================================= */
+html {
+  font-family: var(--sk-font-sans);
+  color: var(--sk-fg);
+  -webkit-font-smoothing: antialiased;
+}
+
+.sk-display,
+.sk-h1, .sk-h2, .sk-h3, .sk-h4 {
+  font-family: var(--sk-font-display);
+  color: var(--sk-fg);
+  letter-spacing: var(--sk-tracking-tight);
+  line-height: var(--sk-lh-tight);
+  font-weight: 700;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.sk-display  { font-size: var(--sk-fs-display); font-weight: 700; }
+.sk-h1       { font-size: var(--sk-fs-h1); }
+.sk-h2       { font-size: var(--sk-fs-h2); }
+.sk-h3       { font-size: var(--sk-fs-h3); line-height: var(--sk-lh-snug); }
+.sk-h4       { font-size: var(--sk-fs-h4); line-height: var(--sk-lh-snug); font-weight: 600; }
+
+.sk-eyebrow {
+  font-size: var(--sk-fs-caption);
+  color: var(--sk-fg-subtle);
+  font-weight: 500;
+  letter-spacing: var(--sk-tracking-wide);
+  text-transform: none;
+}
+
+.sk-lead     { font-size: var(--sk-fs-body-lg); line-height: var(--sk-lh-body); color: var(--sk-fg-muted); }
+.sk-body     { font-size: var(--sk-fs-body); line-height: var(--sk-lh-body); color: var(--sk-fg-muted); }
+.sk-body-sm  { font-size: var(--sk-fs-body-sm); line-height: var(--sk-lh-body); color: var(--sk-fg-muted); }
+.sk-caption  { font-size: var(--sk-fs-caption); line-height: 1.4; color: var(--sk-fg-subtle); }
+.sk-micro    { font-size: var(--sk-fs-micro); line-height: 1.4; color: var(--sk-fg-subtle); }
+
+/* Inline utilities frequently needed in hero/section copy */
+.sk-accent-text  { color: var(--sk-accent); }
+.sk-accent-blue  { color: var(--sk-blue-600); }
+.sk-trademark    { font-size: 0.55em; vertical-align: super; font-weight: 600; margin-left: 1px; }
+
+  </style>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+
+// Shared primitives for the Semakare website UI kit.
+// Exposed on window so sibling <script type="text/babel"> files can use them.
+
+const SK = {
+  logo: "../../assets/logo-semakare.png",
+  hero: "../../assets/hero-cyclist.png",
+  phoneDiary: "../../assets/phone-diary.png",
+  peopleGrid: "../../assets/people-grid.png",
+  iphone14: "../../assets/iphone-14-diary.png",
+  iphone16: "../../assets/iphone-16-streak.png",
+  virtualAssistant: "../../assets/virtual-assistant.png",
+  faqPortrait: "../../assets/faq-portrait.png",
+};
+
+function TM() {
+  return <sup style={{ fontSize: "0.48em", fontWeight: 600, verticalAlign: "super" }}>TM</sup>;
+}
+
+function Brand({ children = "SemaKare", purple = true }) {
+  return (
+    <span style={{ color: purple ? "var(--sk-accent)" : "inherit", fontWeight: 700 }}>
+      {children}<TM />
+    </span>
+  );
+}
+
+function ArrowUR({ size = 14, color = "currentColor" }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M7 17 17 7" />
+      <path d="M9 7h8v8" />
+    </svg>
+  );
+}
+
+function WhatsAppGlyph({ size = 20 }) {
+  return (
+    <span style={{
+      display: "inline-flex", alignItems: "center", justifyContent: "center",
+      width: size, height: size, borderRadius: 999, background: "var(--sk-green-500)", color: "#fff"
+    }}>
+      <svg width={size * 0.6} height={size * 0.6} viewBox="0 0 24 24" fill="currentColor">
+        <path d="M20.5 3.5A11 11 0 0 0 3.3 17.8L2 22l4.3-1.3A11 11 0 1 0 20.5 3.5zM12 20a8 8 0 0 1-4-1.1l-.3-.2-2.5.8.8-2.4-.2-.3A8 8 0 1 1 12 20zm4.4-5.8c-.2-.1-1.4-.7-1.6-.8s-.4-.1-.6.1-.6.8-.8 1-.3.1-.5 0a6.5 6.5 0 0 1-3.2-2.8c-.2-.4.2-.4.6-1.2a.4.4 0 0 0 0-.4c0-.1-.6-1.4-.8-1.9s-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8A12 12 0 0 0 13 17a4 4 0 0 0 2.7.6 2.2 2.2 0 0 0 1.5-1 1.8 1.8 0 0 0 .1-1c0-.1-.2-.2-.4-.3z" />
+      </svg>
+    </span>
+  );
+}
+
+function HelpGlyph({ size = 16 }) {
+  return (
+    <span style={{
+      display: "inline-flex", alignItems: "center", justifyContent: "center",
+      width: size, height: size, borderRadius: 999, background: "var(--sk-accent)",
+      color: "#fff", fontSize: size * 0.65, fontWeight: 700
+    }}>?</span>
+  );
+}
+
+function Button({ variant = "primary", size = "md", icon, children, onClick, style }) {
+  const base = {
+    display: "inline-flex", alignItems: "center", gap: 10, border: 0, cursor: "pointer",
+    fontFamily: "var(--sk-font-sans)", fontWeight: 600, lineHeight: 1,
+    borderRadius: 999, transition: "all 120ms ease-out", whiteSpace: "nowrap",
+  };
+  const sizes = {
+    sm: { padding: "10px 18px", fontSize: 14 },
+    md: { padding: "14px 24px", fontSize: 15 },
+    lg: { padding: "16px 28px", fontSize: 16 },
+  };
+  const variants = {
+    primary: { background: "var(--sk-purple-900)", color: "#fff", boxShadow: "0 4px 14px rgba(67,31,148,.18)" },
+    secondary: { background: "#fff", color: "var(--sk-purple-800)", boxShadow: "inset 0 0 0 1.5px var(--sk-purple-800)" },
+    ghost: { background: "#fff", color: "var(--sk-purple-800)", boxShadow: "inset 0 0 0 1.5px var(--sk-border)" },
+  };
+  return (
+    <button onClick={onClick} style={{ ...base, ...sizes[size], ...variants[variant], ...style }}
+      onMouseDown={e => e.currentTarget.style.transform = "translateY(1px)"}
+      onMouseUp={e => e.currentTarget.style.transform = ""}
+      onMouseLeave={e => e.currentTarget.style.transform = ""}
+    >
+      <span>{children}</span>
+      {icon}
+    </button>
+  );
+}
+
+function Eyebrow({ children }) {
+  return <div className="sk-eyebrow" style={{ marginBottom: 8 }}>{children}</div>;
+}
+
+// Filled purple circle holding a white Lucide-style glyph
+function PillarIcon({ name, size = 46 }) {
+  const paths = {
+    bell: <><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9" /><path d="M10 21a2 2 0 0 0 4 0" /></>,
+    utensils: <><path d="M5 21h14" /><path d="M6 10h12l-1 8a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2z" /><path d="M8 10V7a4 4 0 0 1 8 0v3" /></>,
+    heart: <><path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.7A4 4 0 0 1 19 11c0 5.5-7 10-7 10z" /></>,
+    clipboard: <><rect x="6" y="4" width="12" height="18" rx="2" /><rect x="9" y="2" width="6" height="4" rx="1" /><path d="M9 12h6M9 16h4" /></>,
+    sparkle: <><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M18 6l-2.5 2.5M8.5 15.5 6 18" /><circle cx="12" cy="12" r="2.5" /></>,
+  };
+  return (
+    <div style={{
+      width: size, height: size, borderRadius: 999, flex: "none",
+      background: "var(--sk-accent)", color: "#fff",
+      display: "inline-flex", alignItems: "center", justifyContent: "center",
+    }}>
+      <svg width={size * 0.5} height={size * 0.5} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        {paths[name]}
+      </svg>
+    </div>
+  );
+}
+
+// Rainbow flower medal — approximated from the app's SIA avatar
+function FlowerMedal({ size = 44 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 64 64">
+      <defs>
+        <radialGradient id="fm" cx="50%" cy="50%" r="55%">
+          <stop offset="0%" stopColor="#fff" />
+          <stop offset="45%" stopColor="#fff" />
+          <stop offset="100%" stopColor="#e4eef6" />
+        </radialGradient>
+        <linearGradient id="p1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#ff9f6b" /><stop offset="1" stopColor="#ffd86b" /></linearGradient>
+        <linearGradient id="p2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#5fd38f" /><stop offset="1" stopColor="#2dbf6b" /></linearGradient>
+        <linearGradient id="p3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#4da6e8" /><stop offset="1" stopColor="#7a4ed0" /></linearGradient>
+        <linearGradient id="p4" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#c3b2ea" /><stop offset="1" stopColor="#ff9fd0" /></linearGradient>
+      </defs>
+      {[0, 60, 120, 180, 240, 300].map((r, i) => (
+        <ellipse key={i} cx="32" cy="14" rx="9" ry="14"
+          fill={`url(#p${(i % 4) + 1})`}
+          transform={`rotate(${r} 32 32)`} opacity="0.9" />
+      ))}
+      <circle cx="32" cy="32" r="12" fill="url(#fm)" />
+    </svg>
+  );
+}
+
+// Sticky white header for inner pages (Tools, Affordability, Get Support, HCP-derived)
+function InnerHeader({ active = "home" }) {
+  const items = [
+    { id: "home",         label: "Home",          href: "index.html" },
+    { id: "tools",        label: "Tools",         href: "tools.html" },
+    { id: "affordability",label: "Affordability", href: "affordability.html" },
+    { id: "support",      label: "Get Support",   href: "getsupport.html" },
+    { id: "hcp",          label: "HCP",           href: "hcp.html" },
+  ];
+  return (
+    <header style={{
+      background: "#fff", boxShadow: "0 1px 0 var(--sk-border-soft)",
+      padding: "18px 72px", display: "flex", alignItems: "center", gap: 48,
+      position: "sticky", top: 0, zIndex: 20,
+    }}>
+      <a href="index.html" style={{ display: "inline-flex", flexShrink: 0 }}>
+        <img src="../../assets/logo-semakare.png" alt="SemaKare" style={{ height: 36 }} />
+      </a>
+      <nav style={{ display: "flex", gap: 6, flex: 1, justifyContent: "center" }}>
+        {items.map(l => (
+          <a key={l.id} href={l.href} style={{
+            padding: "10px 16px", borderRadius: 999, fontSize: 14, fontWeight: 600,
+            color: l.id === active ? "var(--sk-accent)" : "var(--sk-fg)",
+            background: l.id === active ? "var(--sk-purple-100)" : "transparent",
+            textDecoration: "none", transition: "all 120ms ease-out",
+          }}
+          onMouseEnter={e => { if (l.id !== active) e.currentTarget.style.background = "var(--sk-gray-100)"; }}
+          onMouseLeave={e => { if (l.id !== active) e.currentTarget.style.background = "transparent"; }}
+          >{l.label}</a>
+        ))}
+      </nav>
+      <Button variant="ghost" size="sm" icon={<HelpGlyph size={18} />}>Need Help?</Button>
+    </header>
+  );
+}
+
+
+
+function FAQ() {
+  const [open, setOpen] = React.useState(3);
+  const items = [
+    { q: <>Is Semakare<TM /> free?</>, a: "Yes — SemaKare™ is a complimentary support program offered at no cost to patients prescribed Semaglutide." },
+    { q: <>What if I miss a dose?</>, a: "SemaKare™ reminders help you recover gracefully — follow the in-app guidance or chat with your Sema Counsellor." },
+    { q: <>Who can enroll in Semakare<TM />?</>, a: "Adults in India starting or continuing Semaglutide therapy under a physician's care." },
+    { q: <>Is my information safe?</>, a: "Yes. Your data is secure and privacy-protected, following healthcare standards." },
+    { q: <>How do I contact a Sema Counsellor?</>, a: "Call us, tap WhatsApp Quick Answers in the app, or request a diet consult from the Get Support page." },
+  ];
+  return (
+    <section style={{ padding: "90px 72px", background: "#fff" }}>
+      <div style={{ maxWidth: 1200, margin: "0 auto", display: "grid", gridTemplateColumns: "1.1fr 0.9fr", gap: 80, alignItems: "start" }}>
+        <div>
+          <h2 className="sk-h1" style={{ marginBottom: 10 }}>Frequently Asked Questions</h2>
+          <p className="sk-body" style={{ marginBottom: 28 }}>Find answers about enrollment, features, and how Semakare<TM /> supports you.</p>
+          <div style={{ display: "grid", gap: 12 }}>
+            {items.map((it, i) => (
+              <FAQRow key={i} open={open === i} onClick={() => setOpen(open === i ? -1 : i)} q={it.q} a={it.a} />
+            ))}
+          </div>
+        </div>
+        <div style={{ position: "relative" }}>
+          <img src={SK.faqPortrait} alt="" style={{ width: "100%", borderRadius: 24, display: "block" }} />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function FAQRow({ open, onClick, q, a }) {
+  return (
+    <div onClick={onClick} style={{
+      borderRadius: 14, cursor: "pointer",
+      background: open ? "var(--sk-bg-faq)" : "#fff",
+      border: open ? "2px solid var(--sk-blue-500)" : "1px solid var(--sk-border-soft)",
+      padding: open ? "16px 20px" : "18px 20px",
+      transition: "all 150ms ease-out",
+    }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontWeight: 600, fontSize: 14 }}>
+        <span>{q}</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--sk-accent)" strokeWidth="2.5" strokeLinecap="round"
+          style={{ transform: open ? "rotate(180deg)" : "rotate(0)", transition: "transform 150ms" }}>
+          <path d="M6 9l6 6 6-6" />
+        </svg>
+      </div>
+      {open && <div className="sk-body" style={{ fontSize: 13, marginTop: 10 }}>{a}</div>}
+    </div>
+  );
+}
+
+function Footer() {
+  return (
+    <footer style={{ background: "var(--sk-blue-50)", padding: "60px 72px 50px" }}>
+      <div style={{ maxWidth: 1200, margin: "0 auto", display: "grid", gridTemplateColumns: "1.2fr 1fr 1fr", gap: 60 }}>
+        <div>
+          <img src="" alt="SemaKare" style={{ height: 32, marginBottom: 16 }} />
+          <div style={{ fontSize: 13, fontWeight: 500, color: "var(--sk-fg)", marginBottom: 12 }}>Download app from</div>
+          <div style={{ display: "flex", gap: 10 }}>
+            <StoreBadge kind="app" /><StoreBadge kind="play" />
+          </div>
+        </div>
+        <FooterCol title="Get started" items={["How it works", <>About SemaKare<TM /></>, <>Why SemaKare<TM />?</>, "FAQs"]} />
+        <FooterCol title="Resources" items={["Privacy policy", "Terms of service", "Contact us", "Cookie Policy", "Manage Cookie Preferences"]} />
+      </div>
+    </footer>
+  );
+}
+
+function FooterCol({ title, items }) {
+  return (
+    <div>
+      <h5 style={{ fontSize: 14, fontWeight: 700, margin: "0 0 14px", color: "var(--sk-fg)" }}>{title}</h5>
+      <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "grid", gap: 10 }}>
+        {items.map((t, i) => <li key={i}><a style={{ color: "var(--sk-fg-muted)", textDecoration: "none", fontSize: 13, cursor: "pointer" }}>{t}</a></li>)}
+      </ul>
+    </div>
+  );
+}
+
+function StoreBadge({ kind }) {
+  const common = { background: "#0f1424", color: "#fff", borderRadius: 10, padding: "8px 14px", display: "inline-flex", alignItems: "center", gap: 10, fontSize: 11, lineHeight: 1.15 };
+  if (kind === "app") return (
+    <div style={common}>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 12.5c0-2.2 1.8-3.3 1.9-3.4-1-1.5-2.7-1.7-3.3-1.7-1.4-.1-2.7.8-3.4.8-.7 0-1.8-.8-3-.8-1.5 0-3 .9-3.8 2.3-1.6 2.8-.4 6.9 1.2 9.1.8 1.1 1.7 2.3 2.9 2.3 1.2 0 1.6-.8 3-.8s1.8.8 3 .7c1.2 0 2-1.1 2.8-2.2.9-1.3 1.3-2.5 1.3-2.6-.1 0-2.6-1-2.6-3.7M15.3 5.8c.6-.8 1.1-1.9 1-3-.9 0-2 .6-2.7 1.4-.6.7-1.1 1.8-1 2.9 1.1.1 2.1-.5 2.7-1.3" /></svg>
+      <div><div style={{ fontSize: 9, opacity: .7 }}>Download on the</div><div style={{ fontWeight: 600, fontSize: 13 }}>App Store</div></div>
+    </div>
+  );
+  return (
+    <div style={common}>
+      <svg width="16" height="16" viewBox="0 0 24 24"><path d="M3 20V4l12 8-12 8z" fill="#34a853" /><path d="M3 4v16l9-8-9-8z" fill="#4285f4" /><path d="M15 12l-6 6 9-3-3-3z" fill="#fbbc04" /><path d="M15 12l-6-6 9 3-3 3z" fill="#ea4335" /></svg>
+      <div><div style={{ fontSize: 9, opacity: .7 }}>GET IT ON</div><div style={{ fontWeight: 600, fontSize: 13 }}>Google Play</div></div>
+    </div>
+  );
+}
+
+
+
+// Affordability.jsx — PAP, Insurance Navigation, Home Delivery
+
+function CheckItem({ children }) {
+  return (
+    <div style={{ display: "flex", gap: 12, alignItems: "flex-start", marginBottom: 12 }}>
+      <div style={{
+        width: 22, height: 22, borderRadius: 999, background: "var(--sk-purple-100)",
+        display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: 1,
+      }}>
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+          <path d="M2 6l3 3 5-5" stroke="var(--sk-accent)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      </div>
+      <span style={{ fontSize: 15, color: "var(--sk-fg)", lineHeight: 1.5 }}>{children}</span>
+    </div>
+  );
+}
+
+function StepCard({ number, title, body }) {
+  return (
+    <div style={{ display: "flex", gap: 16, alignItems: "flex-start" }}>
+      <div style={{
+        width: 36, height: 36, borderRadius: 999, background: "var(--sk-accent)",
+        color: "#fff", display: "flex", alignItems: "center", justifyContent: "center",
+        fontWeight: 700, fontSize: 16, flexShrink: 0, fontFamily: "var(--sk-font-display)",
+      }}>
+        {number}
+      </div>
+      <div>
+        <div style={{ fontWeight: 700, fontSize: 15, color: "var(--sk-fg)", marginBottom: 4 }}>{title}</div>
+        <div style={{ fontSize: 14, color: "var(--sk-fg-subtle)", lineHeight: 1.6 }}>{body}</div>
+      </div>
+    </div>
+  );
+}
+
+function SectionEyebrow({ children, color = "var(--sk-accent)" }) {
+  return (
+    <div style={{
+      display: "inline-flex", alignItems: "center", gap: 8,
+      fontSize: 12, fontWeight: 700, letterSpacing: "0.08em",
+      textTransform: "uppercase", color, marginBottom: 16,
+    }}>
+      <div style={{ width: 24, height: 2, background: color, borderRadius: 2 }} />
+      {children}
+    </div>
+  );
+}
+
+// ─── PAP Section ─────────────────────────────────────────────────────────────
+
+function PAPSection() {
+  return (
+    <section style={{ padding: "80px 120px", background: "#fff" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 72, alignItems: "center" }}>
+        {/* Left: description */}
+        <div>
+          <SectionEyebrow>Patient Assistance Program</SectionEyebrow>
+          <h2 style={{
+            fontFamily: "var(--sk-font-display)", fontSize: 40, fontWeight: 700,
+            color: "var(--sk-fg)", letterSpacing: "-0.02em", margin: "0 0 20px", lineHeight: 1.15,
+          }}>
+            We'll help you get the medicine you need.
+          </h2>
+          <p style={{ fontSize: 16, color: "var(--sk-fg-subtle)", lineHeight: 1.7, marginBottom: 28 }}>
+            Dr. Reddy's Patient Assistance Program helps eligible patients access Semared at reduced or no cost. If affordability is a concern, you don't have to navigate it alone.
+          </p>
+          <div style={{ marginBottom: 32 }}>
+            <div style={{ fontSize: 13, fontWeight: 700, color: "var(--sk-fg)", marginBottom: 12, textTransform: "uppercase", letterSpacing: "0.06em" }}>
+              You may be eligible if you:
+            </div>
+            <CheckItem>Have a valid prescription for Semaglutide from a registered doctor</CheckItem>
+            <CheckItem>Meet income eligibility criteria set by the program</CheckItem>
+            <CheckItem>Do not have insurance that fully covers your treatment cost</CheckItem>
+            <CheckItem>Are a resident of India and a citizen</CheckItem>
+          </div>
+          <Button variant="primary" size="lg">Check Your Eligibility</Button>
+          <p style={{ fontSize: 12, color: "var(--sk-fg-subtle)", marginTop: 12 }}>
+            A Sema Counsellor will guide you through the full application. No paperwork hassle.
+          </p>
+        </div>
+
+        {/* Right: how to apply card */}
+        <div style={{
+          background: "var(--sk-bg-card)", borderRadius: 24, padding: 36,
+          border: "1.5px solid var(--sk-border-soft)",
+        }}>
+          <div style={{ fontFamily: "var(--sk-font-display)", fontSize: 20, fontWeight: 700, color: "var(--sk-fg)", marginBottom: 28 }}>
+            How to apply
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+            <StepCard number={1} title="Talk to your doctor"
+              body="Ask your prescribing doctor to fill in the PAP referral form at your next visit. They already know the process." />
+            <div style={{ height: 1, background: "var(--sk-border-soft)" }} />
+            <StepCard number={2} title="Call or WhatsApp us"
+              body="Contact a SemaKare™ Counsellor on 1800-XXX-XXXX (toll-free). They'll verify your eligibility over the phone — takes under 10 minutes." />
+            <div style={{ height: 1, background: "var(--sk-border-soft)" }} />
+            <StepCard number={3} title="Submit documents"
+              body="Upload your prescription and income proof through WhatsApp or email. We'll handle the rest." />
+            <div style={{ height: 1, background: "var(--sk-border-soft)" }} />
+            <StepCard number={4} title="Receive your medicine"
+              body="Approved patients receive their Semared supply within 5–7 business days, delivered to their door." />
+          </div>
+          <div style={{ marginTop: 28 }}>
+            <Button variant="ghost" size="sm" icon={<WhatsAppGlyph size={16} />}>Start on WhatsApp</Button>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── Insurance Section ───────────────────────────────────────────────────────
+
+const INS_FAQS = [
+  {
+    q: "Is Semaglutide covered by health insurance in India?",
+    a: "Coverage varies widely. Some group health policies cover it under diabetes or obesity management, especially post a specialist referral. Individual policies often require pre-authorisation. Our counsellors know which insurers have approved claims — call us before assuming it isn't covered.",
+  },
+  {
+    q: "What documents do I need for a reimbursement claim?",
+    a: "Typically: your doctor's prescription, a diagnosis letter (ICD code for diabetes or obesity), purchase receipts, and your policy number. We can help you prepare a complete claim file.",
+  },
+  {
+    q: "My insurer rejected my claim. What now?",
+    a: "Don't give up. Many initial rejections are overturned on appeal when the right clinical documentation is provided. A SemaKare™ Counsellor can help you draft an appeal with your doctor's support.",
+  },
+  {
+    q: "Can I claim under a corporate / employer health policy?",
+    a: "Yes — corporate policies tend to be more flexible. Your HR or TPA (Third Party Administrator) can confirm. We can also write a clinical justification letter to support your request.",
+  },
+];
+
+function InsuranceSection() {
+  const [open, setOpen] = React.useState(null);
+
+  return (
+    <section style={{ padding: "80px 120px", background: "var(--sk-blue-50)" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "5fr 7fr", gap: 72, alignItems: "start" }}>
+        {/* Left */}
+        <div style={{ position: "sticky", top: 100 }}>
+          <SectionEyebrow>Insurance coverage</SectionEyebrow>
+          <h2 style={{
+            fontFamily: "var(--sk-font-display)", fontSize: 40, fontWeight: 700,
+            color: "var(--sk-fg)", letterSpacing: "-0.02em", margin: "0 0 20px", lineHeight: 1.15,
+          }}>
+            Navigate insurance with confidence.
+          </h2>
+          <p style={{ fontSize: 16, color: "var(--sk-fg-subtle)", lineHeight: 1.7, marginBottom: 28 }}>
+            Insurance policies for Semaglutide are complicated — but they're not impossible. Our counsellors have helped hundreds of patients get claims approved.
+          </p>
+          <Button variant="primary" size="lg">Speak to a Counsellor</Button>
+          <div style={{ marginTop: 20, display: "flex", alignItems: "center", gap: 10 }}>
+            <div style={{ width: 36, height: 36, borderRadius: 999, background: "#fff", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--sk-accent)" strokeWidth="2" strokeLinecap="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.8 12.07 19.79 19.79 0 0 1 1.76 3.48 2 2 0 0 1 3.74 1.3h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l1.06-1.06a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.73 16z"/>
+              </svg>
+            </div>
+            <div>
+              <div style={{ fontSize: 14, fontWeight: 700, color: "var(--sk-fg)" }}>1800-XXX-XXXX</div>
+              <div style={{ fontSize: 12, color: "var(--sk-fg-subtle)" }}>Toll-free · Mon–Sat 9am–6pm</div>
+            </div>
+          </div>
+        </div>
+
+        {/* Right: FAQ accordion */}
+        <div>
+          <div style={{ fontSize: 13, fontWeight: 700, color: "var(--sk-fg-subtle)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 20 }}>
+            Common questions
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+            {INS_FAQS.map((item, i) => {
+              const isOpen = open === i;
+              return (
+                <div key={i} style={{
+                  background: "#fff", borderRadius: 14,
+                  border: `1.5px solid ${isOpen ? "var(--sk-accent)" : "var(--sk-border-soft)"}`,
+                  overflow: "hidden", transition: "border-color 120ms ease-out",
+                }}>
+                  <button onClick={() => setOpen(isOpen ? null : i)} style={{
+                    width: "100%", padding: "20px 22px", border: "none", background: "transparent",
+                    display: "flex", justifyContent: "space-between", alignItems: "center",
+                    cursor: "pointer", fontFamily: "var(--sk-font-sans)", textAlign: "left", gap: 16,
+                  }}>
+                    <span style={{ fontSize: 15, fontWeight: 600, color: "var(--sk-fg)", lineHeight: 1.4 }}>
+                      {item.q}
+                    </span>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--sk-fg-subtle)" strokeWidth="2" strokeLinecap="round"
+                      style={{ flexShrink: 0, transform: isOpen ? "rotate(180deg)" : "none", transition: "transform 200ms ease-out" }}>
+                      <path d="M6 9l6 6 6-6"/>
+                    </svg>
+                  </button>
+                  {isOpen && (
+                    <div style={{ padding: "0 22px 20px", fontSize: 14, color: "var(--sk-fg-subtle)", lineHeight: 1.7 }}>
+                      {item.a}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── Home Delivery Section ───────────────────────────────────────────────────
+
+function DeliveryCard({ name, tagline, benefits, ctaLabel, ctaHref, accent }) {
+  return (
+    <div style={{
+      background: "#fff", borderRadius: 24, padding: 36,
+      border: `2px solid ${accent}30`,
+      display: "flex", flexDirection: "column",
+    }}>
+      <div style={{
+        display: "inline-flex", alignItems: "center", justifyContent: "center",
+        background: accent + "15", borderRadius: 14, padding: "12px 20px", marginBottom: 20,
+        alignSelf: "flex-start",
+      }}>
+        <span style={{ fontSize: 17, fontWeight: 800, color: accent, letterSpacing: "-0.01em" }}>
+          {name}
+        </span>
+      </div>
+      <div style={{ fontSize: 16, fontWeight: 700, color: "var(--sk-fg)", marginBottom: 8 }}>{tagline}</div>
+      <div style={{ display: "flex", flexDirection: "column", gap: 10, flex: 1, marginBottom: 24 }}>
+        {benefits.map((b, i) => (
+          <div key={i} style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
+            <div style={{ width: 6, height: 6, borderRadius: 999, background: accent, marginTop: 7, flexShrink: 0 }} />
+            <span style={{ fontSize: 14, color: "var(--sk-fg-subtle)", lineHeight: 1.5 }}>{b}</span>
+          </div>
+        ))}
+      </div>
+      <a href={ctaHref} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
+        <button style={{
+          width: "100%", padding: "14px", borderRadius: 12, border: `2px solid ${accent}`,
+          background: "transparent", color: accent, fontSize: 14, fontWeight: 700,
+          cursor: "pointer", fontFamily: "var(--sk-font-sans)", transition: "all 120ms ease-out",
+        }}
+        onMouseEnter={e => { e.currentTarget.style.background = accent; e.currentTarget.style.color = "#fff"; }}
+        onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = accent; }}
+        >
+          {ctaLabel} →
+        </button>
+      </a>
+    </div>
+  );
+}
+
+function HomeDeliverySection() {
+  return (
+    <section style={{ padding: "80px 120px", background: "#fff" }}>
+      <div style={{ textAlign: "center", marginBottom: 56 }}>
+        <SectionEyebrow>Home Delivery</SectionEyebrow>
+        <h2 style={{
+          fontFamily: "var(--sk-font-display)", fontSize: 40, fontWeight: 700,
+          color: "var(--sk-fg)", letterSpacing: "-0.02em", margin: "0 0 16px", lineHeight: 1.15,
+        }}>
+          Delivered to your door.<br />Never miss a refill.
+        </h2>
+        <p style={{ fontSize: 16, color: "var(--sk-fg-subtle)", lineHeight: 1.7, maxWidth: 520, margin: "0 auto" }}>
+          Order Semared through our trusted pharmacy partners. SemaKare™ integrates with their platforms to send you a refill reminder before you run out.
+        </p>
+      </div>
+
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, maxWidth: 800, margin: "0 auto 48px" }}>
+        <DeliveryCard
+          name="Tata 1mg"
+          tagline="Fast delivery, genuine medicines"
+          accent="#E40D2B"
+          benefits={[
+            "Authenticity-guaranteed supply chain",
+            "Delivery in 2–4 hours in major cities",
+            "Upload prescription directly via app",
+            "Auto-refill reminders linked to your dose schedule",
+          ]}
+          ctaLabel="Order on Tata 1mg"
+          ctaHref="https://www.1mg.com"
+        />
+        <DeliveryCard
+          name="PharmEasy"
+          tagline="Best prices, doorstep delivery"
+          accent="#F47820"
+          benefits={[
+            "Price comparison and cashback offers",
+            "Pan-India delivery network",
+            "Prescription storage in-app",
+            "SemaKare™ counsellor hand-off for queries",
+          ]}
+          ctaLabel="Order on PharmEasy"
+          ctaHref="https://pharmeasy.in"
+        />
+      </div>
+
+      {/* Refill reminder callout */}
+      <div style={{
+        maxWidth: 800, margin: "0 auto", padding: "28px 36px", borderRadius: 20,
+        background: "var(--sk-purple-100)", border: "1.5px solid var(--sk-purple-200)",
+        display: "flex", alignItems: "center", gap: 24,
+      }}>
+        <div style={{
+          width: 52, height: 52, borderRadius: 999, background: "var(--sk-accent)",
+          display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
+        }}>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+          </svg>
+        </div>
+        <div style={{ flex: 1 }}>
+          <div style={{ fontWeight: 700, fontSize: 16, color: "var(--sk-fg)", marginBottom: 4 }}>
+            Never run out mid-cycle
+          </div>
+          <div style={{ fontSize: 14, color: "var(--sk-fg-subtle)", lineHeight: 1.6 }}>
+            SemaKare™ sends a WhatsApp reminder 5 days before your next dose is due — so you always have time to reorder.
+          </div>
+        </div>
+        <Button variant="ghost" size="sm" icon={<WhatsAppGlyph size={16} />}>Enable Reminders</Button>
+      </div>
+    </section>
+  );
+}
+
+// ─── Full Page ────────────────────────────────────────────────────────────────
+
+function AffordabilityPage() {
+  return (
+    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
+      <InnerHeader active="affordability" />
+
+      {/* Page hero */}
+      <section style={{
+        background: "linear-gradient(170deg, var(--sk-blue-50) 0%, #fff 100%)",
+        padding: "72px 120px 60px", textAlign: "center",
+      }}>
+        <Eyebrow style={{ justifyContent: "center", marginBottom: 16 }}>Affordability</Eyebrow>
+        <h1 style={{
+          fontFamily: "var(--sk-font-display)", fontSize: 52, fontWeight: 700,
+          color: "var(--sk-fg)", letterSpacing: "-0.03em",
+          margin: "0 0 20px", lineHeight: 1.1,
+        }}>
+          Your treatment<br />shouldn't have to wait.
+        </h1>
+        <p style={{ fontSize: 18, color: "var(--sk-fg-subtle)", lineHeight: 1.6, maxWidth: 560, margin: "0 auto 36px" }}>
+          From patient assistance programs to insurance navigation and home delivery — SemaKare™ removes the financial barriers between you and your health.
+        </p>
+        {/* Anchor links */}
+        <div style={{ display: "flex", gap: 12, justifyContent: "center" }}>
+          {[
+            { label: "Patient Assistance", href: "#pap" },
+            { label: "Insurance Help", href: "#insurance" },
+            { label: "Home Delivery", href: "#delivery" },
+          ].map(l => (
+            <a key={l.href} href={l.href} style={{ textDecoration: "none" }}>
+              <button style={{
+                padding: "10px 18px", borderRadius: 999, border: "1.5px solid var(--sk-border-soft)",
+                background: "#fff", fontSize: 14, fontWeight: 600, color: "var(--sk-fg)",
+                cursor: "pointer", fontFamily: "var(--sk-font-sans)",
+                transition: "all 120ms ease-out",
+              }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = "var(--sk-accent)"; e.currentTarget.style.color = "var(--sk-accent)"; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = "var(--sk-border-soft)"; e.currentTarget.style.color = "var(--sk-fg)"; }}
+              >{l.label}</button>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <div id="pap">    <PAPSection />      </div>
+      <div id="insurance"><InsuranceSection /></div>
+      <div id="delivery"><HomeDeliverySection /></div>
+
+      {/* Bottom CTA */}
+      <section style={{
+        background: "var(--sk-purple-100)", padding: "52px 120px",
+        display: "flex", alignItems: "center", justifyContent: "space-between",
+      }}>
+        <div>
+          <div style={{ fontSize: 24, fontWeight: 700, fontFamily: "var(--sk-font-display)", color: "var(--sk-fg)", marginBottom: 8 }}>
+            Not sure which option is right for you?
+          </div>
+          <div style={{ fontSize: 16, color: "var(--sk-fg-subtle)" }}>
+            A Sema Counsellor will find the best fit for your situation — no cost, no obligation.
+          </div>
+        </div>
+        <Button variant="primary" size="lg">Speak to a Counsellor</Button>
+      </section>
+
+      <Footer />
+    </div>
+  );
+}
+
+function App() { return <AffordabilityPage />; }
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+
+</script>
+</body>
+</html>

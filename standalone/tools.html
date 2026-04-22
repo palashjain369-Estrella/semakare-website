@@ -1,0 +1,1180 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>SemaKare — Health Tools</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    html, body { margin: 0; background: #fff; color: var(--sk-fg); font-family: var(--sk-font-sans); }
+    * { box-sizing: border-box; }
+    button { font: inherit; }
+    a { color: inherit; }
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+    input[type=number] { -moz-appearance: textfield; }
+/* =========================================================
+   Semakare Design System — colors & type tokens
+   Import this file wherever design tokens are needed.
+   ========================================================= */
+
+/* Fonts — DM Sans chosen as closest Google-Fonts match for the
+   rounded, humanist geometric sans used in the Semakare reference.
+   Flagged to user: true brand font file not provided. */
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&display=swap");
+
+:root {
+  /* ---------- Brand palette ---------- */
+  --sk-purple-950: #2a0e6e;   /* deepest — hover / pressed */
+  --sk-purple-900: #3a1687;   /* primary button fill */
+  --sk-purple-800: #431f94;   /* headline purple, primary brand */
+  --sk-purple-700: #5a2fb5;   /* logo letter fill */
+  --sk-purple-600: #7a4ed0;   /* accent on chips / illustrations */
+  --sk-purple-300: #c3b2ea;   /* soft blob / decoration */
+  --sk-purple-100: #ede8f7;   /* faint tint background */
+
+  --sk-blue-600:   #2f8fd4;   /* "Simpler" accent */
+  --sk-blue-500:   #4da6e8;   /* link / info accent */
+  --sk-blue-300:   #a7d4f3;   /* soft blob */
+  --sk-blue-100:   #e4eef6;   /* section wash (alt) */
+  --sk-blue-50:    #eaf6ff;   /* section wash / footer */
+
+  --sk-teal-400:   #29c3c3;   /* data / progress-good */
+  --sk-green-500:  #2dbf6b;   /* WhatsApp / success */
+  --sk-amber-500:  #f6b93b;   /* warning / partial */
+  --sk-red-500:    #e8553d;   /* missed / alert */
+
+  /* ---------- Neutrals ---------- */
+  --sk-ink:        #0f1424;   /* strongest text */
+  --sk-ink-2:      #1a2136;   /* body heading */
+  --sk-gray-700:   #4a5165;   /* body copy */
+  --sk-gray-500:   #6b7280;   /* secondary copy */
+  --sk-gray-400:   #9aa0ae;   /* tertiary / placeholder */
+  --sk-gray-300:   #d4d6dd;   /* hairline borders */
+  --sk-gray-200:   #e4e5ea;   /* card outline */
+  --sk-gray-150:   #eceaef;   /* feature card fill (warm gray) */
+  --sk-gray-100:   #f3f4f7;   /* surface alt */
+  --sk-gray-50:    #f8f9fb;   /* page alt */
+  --sk-white:      #ffffff;
+
+  /* ---------- Semantic roles ---------- */
+  --sk-bg:               var(--sk-white);
+  --sk-bg-soft:          var(--sk-blue-50);     /* big section wash */
+  --sk-bg-card:          var(--sk-gray-150);    /* warm neutral feature card */
+  --sk-bg-faq:           var(--sk-blue-50);     /* expanded FAQ fill */
+  --sk-fg:               var(--sk-ink);
+  --sk-fg-muted:         var(--sk-gray-700);
+  --sk-fg-subtle:        var(--sk-gray-500);
+  --sk-accent:           var(--sk-purple-800);
+  --sk-accent-strong:    var(--sk-purple-900);
+  --sk-accent-pressed:   var(--sk-purple-950);
+  --sk-link:             var(--sk-blue-500);
+  --sk-border:           var(--sk-gray-300);
+  --sk-border-soft:      var(--sk-gray-200);
+
+  /* ---------- Radii ---------- */
+  --sk-r-xs: 6px;
+  --sk-r-sm: 10px;
+  --sk-r-md: 16px;
+  --sk-r-lg: 20px;
+  --sk-r-xl: 28px;
+  --sk-r-2xl: 36px;
+  --sk-r-pill: 999px;
+
+  /* ---------- Shadows ---------- */
+  --sk-shadow-xs:   0 1px 2px rgba(15,20,36,0.05);
+  --sk-shadow-sm:   0 2px 6px rgba(15,20,36,0.06);
+  --sk-shadow-md:   0 8px 24px rgba(15,20,36,0.08);
+  --sk-shadow-lg:   0 20px 50px rgba(67,31,148,0.12);
+  --sk-shadow-btn:  0 8px 22px rgba(67,31,148,0.28);
+
+  /* ---------- Spacing scale (4-pt) ---------- */
+  --sk-s-1: 4px;
+  --sk-s-2: 8px;
+  --sk-s-3: 12px;
+  --sk-s-4: 16px;
+  --sk-s-5: 20px;
+  --sk-s-6: 24px;
+  --sk-s-8: 32px;
+  --sk-s-10: 40px;
+  --sk-s-12: 48px;
+  --sk-s-16: 64px;
+  --sk-s-20: 80px;
+  --sk-s-24: 96px;
+
+  /* ---------- Type tokens ---------- */
+  --sk-font-sans: "DM Sans", "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --sk-font-display: "DM Sans", "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --sk-fs-display: clamp(40px, 4.4vw, 60px);
+  --sk-fs-h1: clamp(34px, 3.4vw, 48px);
+  --sk-fs-h2: clamp(28px, 2.6vw, 38px);
+  --sk-fs-h3: 24px;
+  --sk-fs-h4: 20px;
+  --sk-fs-body-lg: 18px;
+  --sk-fs-body: 16px;
+  --sk-fs-body-sm: 15px;
+  --sk-fs-caption: 13px;
+  --sk-fs-micro: 12px;
+
+  --sk-lh-tight: 1.1;
+  --sk-lh-snug: 1.25;
+  --sk-lh-body: 1.55;
+  --sk-lh-loose: 1.7;
+
+  --sk-tracking-tight: -0.015em;
+  --sk-tracking-normal: 0;
+  --sk-tracking-wide: 0.04em;
+}
+
+/* =========================================================
+   Semantic type classes — use these instead of raw tokens
+   ========================================================= */
+html {
+  font-family: var(--sk-font-sans);
+  color: var(--sk-fg);
+  -webkit-font-smoothing: antialiased;
+}
+
+.sk-display,
+.sk-h1, .sk-h2, .sk-h3, .sk-h4 {
+  font-family: var(--sk-font-display);
+  color: var(--sk-fg);
+  letter-spacing: var(--sk-tracking-tight);
+  line-height: var(--sk-lh-tight);
+  font-weight: 700;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.sk-display  { font-size: var(--sk-fs-display); font-weight: 700; }
+.sk-h1       { font-size: var(--sk-fs-h1); }
+.sk-h2       { font-size: var(--sk-fs-h2); }
+.sk-h3       { font-size: var(--sk-fs-h3); line-height: var(--sk-lh-snug); }
+.sk-h4       { font-size: var(--sk-fs-h4); line-height: var(--sk-lh-snug); font-weight: 600; }
+
+.sk-eyebrow {
+  font-size: var(--sk-fs-caption);
+  color: var(--sk-fg-subtle);
+  font-weight: 500;
+  letter-spacing: var(--sk-tracking-wide);
+  text-transform: none;
+}
+
+.sk-lead     { font-size: var(--sk-fs-body-lg); line-height: var(--sk-lh-body); color: var(--sk-fg-muted); }
+.sk-body     { font-size: var(--sk-fs-body); line-height: var(--sk-lh-body); color: var(--sk-fg-muted); }
+.sk-body-sm  { font-size: var(--sk-fs-body-sm); line-height: var(--sk-lh-body); color: var(--sk-fg-muted); }
+.sk-caption  { font-size: var(--sk-fs-caption); line-height: 1.4; color: var(--sk-fg-subtle); }
+.sk-micro    { font-size: var(--sk-fs-micro); line-height: 1.4; color: var(--sk-fg-subtle); }
+
+/* Inline utilities frequently needed in hero/section copy */
+.sk-accent-text  { color: var(--sk-accent); }
+.sk-accent-blue  { color: var(--sk-blue-600); }
+.sk-trademark    { font-size: 0.55em; vertical-align: super; font-weight: 600; margin-left: 1px; }
+
+  </style>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+
+// Shared primitives for the Semakare website UI kit.
+// Exposed on window so sibling <script type="text/babel"> files can use them.
+
+const SK = {
+  logo: "../../assets/logo-semakare.png",
+  hero: "../../assets/hero-cyclist.png",
+  phoneDiary: "../../assets/phone-diary.png",
+  peopleGrid: "../../assets/people-grid.png",
+  iphone14: "../../assets/iphone-14-diary.png",
+  iphone16: "../../assets/iphone-16-streak.png",
+  virtualAssistant: "../../assets/virtual-assistant.png",
+  faqPortrait: "../../assets/faq-portrait.png",
+};
+
+function TM() {
+  return <sup style={{ fontSize: "0.48em", fontWeight: 600, verticalAlign: "super" }}>TM</sup>;
+}
+
+function Brand({ children = "SemaKare", purple = true }) {
+  return (
+    <span style={{ color: purple ? "var(--sk-accent)" : "inherit", fontWeight: 700 }}>
+      {children}<TM />
+    </span>
+  );
+}
+
+function ArrowUR({ size = 14, color = "currentColor" }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M7 17 17 7" />
+      <path d="M9 7h8v8" />
+    </svg>
+  );
+}
+
+function WhatsAppGlyph({ size = 20 }) {
+  return (
+    <span style={{
+      display: "inline-flex", alignItems: "center", justifyContent: "center",
+      width: size, height: size, borderRadius: 999, background: "var(--sk-green-500)", color: "#fff"
+    }}>
+      <svg width={size * 0.6} height={size * 0.6} viewBox="0 0 24 24" fill="currentColor">
+        <path d="M20.5 3.5A11 11 0 0 0 3.3 17.8L2 22l4.3-1.3A11 11 0 1 0 20.5 3.5zM12 20a8 8 0 0 1-4-1.1l-.3-.2-2.5.8.8-2.4-.2-.3A8 8 0 1 1 12 20zm4.4-5.8c-.2-.1-1.4-.7-1.6-.8s-.4-.1-.6.1-.6.8-.8 1-.3.1-.5 0a6.5 6.5 0 0 1-3.2-2.8c-.2-.4.2-.4.6-1.2a.4.4 0 0 0 0-.4c0-.1-.6-1.4-.8-1.9s-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8A12 12 0 0 0 13 17a4 4 0 0 0 2.7.6 2.2 2.2 0 0 0 1.5-1 1.8 1.8 0 0 0 .1-1c0-.1-.2-.2-.4-.3z" />
+      </svg>
+    </span>
+  );
+}
+
+function HelpGlyph({ size = 16 }) {
+  return (
+    <span style={{
+      display: "inline-flex", alignItems: "center", justifyContent: "center",
+      width: size, height: size, borderRadius: 999, background: "var(--sk-accent)",
+      color: "#fff", fontSize: size * 0.65, fontWeight: 700
+    }}>?</span>
+  );
+}
+
+function Button({ variant = "primary", size = "md", icon, children, onClick, style }) {
+  const base = {
+    display: "inline-flex", alignItems: "center", gap: 10, border: 0, cursor: "pointer",
+    fontFamily: "var(--sk-font-sans)", fontWeight: 600, lineHeight: 1,
+    borderRadius: 999, transition: "all 120ms ease-out", whiteSpace: "nowrap",
+  };
+  const sizes = {
+    sm: { padding: "10px 18px", fontSize: 14 },
+    md: { padding: "14px 24px", fontSize: 15 },
+    lg: { padding: "16px 28px", fontSize: 16 },
+  };
+  const variants = {
+    primary: { background: "var(--sk-purple-900)", color: "#fff", boxShadow: "0 4px 14px rgba(67,31,148,.18)" },
+    secondary: { background: "#fff", color: "var(--sk-purple-800)", boxShadow: "inset 0 0 0 1.5px var(--sk-purple-800)" },
+    ghost: { background: "#fff", color: "var(--sk-purple-800)", boxShadow: "inset 0 0 0 1.5px var(--sk-border)" },
+  };
+  return (
+    <button onClick={onClick} style={{ ...base, ...sizes[size], ...variants[variant], ...style }}
+      onMouseDown={e => e.currentTarget.style.transform = "translateY(1px)"}
+      onMouseUp={e => e.currentTarget.style.transform = ""}
+      onMouseLeave={e => e.currentTarget.style.transform = ""}
+    >
+      <span>{children}</span>
+      {icon}
+    </button>
+  );
+}
+
+function Eyebrow({ children }) {
+  return <div className="sk-eyebrow" style={{ marginBottom: 8 }}>{children}</div>;
+}
+
+// Filled purple circle holding a white Lucide-style glyph
+function PillarIcon({ name, size = 46 }) {
+  const paths = {
+    bell: <><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9" /><path d="M10 21a2 2 0 0 0 4 0" /></>,
+    utensils: <><path d="M5 21h14" /><path d="M6 10h12l-1 8a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2z" /><path d="M8 10V7a4 4 0 0 1 8 0v3" /></>,
+    heart: <><path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.7A4 4 0 0 1 19 11c0 5.5-7 10-7 10z" /></>,
+    clipboard: <><rect x="6" y="4" width="12" height="18" rx="2" /><rect x="9" y="2" width="6" height="4" rx="1" /><path d="M9 12h6M9 16h4" /></>,
+    sparkle: <><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M18 6l-2.5 2.5M8.5 15.5 6 18" /><circle cx="12" cy="12" r="2.5" /></>,
+  };
+  return (
+    <div style={{
+      width: size, height: size, borderRadius: 999, flex: "none",
+      background: "var(--sk-accent)", color: "#fff",
+      display: "inline-flex", alignItems: "center", justifyContent: "center",
+    }}>
+      <svg width={size * 0.5} height={size * 0.5} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        {paths[name]}
+      </svg>
+    </div>
+  );
+}
+
+// Rainbow flower medal — approximated from the app's SIA avatar
+function FlowerMedal({ size = 44 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 64 64">
+      <defs>
+        <radialGradient id="fm" cx="50%" cy="50%" r="55%">
+          <stop offset="0%" stopColor="#fff" />
+          <stop offset="45%" stopColor="#fff" />
+          <stop offset="100%" stopColor="#e4eef6" />
+        </radialGradient>
+        <linearGradient id="p1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#ff9f6b" /><stop offset="1" stopColor="#ffd86b" /></linearGradient>
+        <linearGradient id="p2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#5fd38f" /><stop offset="1" stopColor="#2dbf6b" /></linearGradient>
+        <linearGradient id="p3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#4da6e8" /><stop offset="1" stopColor="#7a4ed0" /></linearGradient>
+        <linearGradient id="p4" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#c3b2ea" /><stop offset="1" stopColor="#ff9fd0" /></linearGradient>
+      </defs>
+      {[0, 60, 120, 180, 240, 300].map((r, i) => (
+        <ellipse key={i} cx="32" cy="14" rx="9" ry="14"
+          fill={`url(#p${(i % 4) + 1})`}
+          transform={`rotate(${r} 32 32)`} opacity="0.9" />
+      ))}
+      <circle cx="32" cy="32" r="12" fill="url(#fm)" />
+    </svg>
+  );
+}
+
+// Sticky white header for inner pages (Tools, Affordability, Get Support, HCP-derived)
+function InnerHeader({ active = "home" }) {
+  const items = [
+    { id: "home",         label: "Home",          href: "index.html" },
+    { id: "tools",        label: "Tools",         href: "tools.html" },
+    { id: "affordability",label: "Affordability", href: "affordability.html" },
+    { id: "support",      label: "Get Support",   href: "getsupport.html" },
+    { id: "hcp",          label: "HCP",           href: "hcp.html" },
+  ];
+  return (
+    <header style={{
+      background: "#fff", boxShadow: "0 1px 0 var(--sk-border-soft)",
+      padding: "18px 72px", display: "flex", alignItems: "center", gap: 48,
+      position: "sticky", top: 0, zIndex: 20,
+    }}>
+      <a href="index.html" style={{ display: "inline-flex", flexShrink: 0 }}>
+        <img src="../../assets/logo-semakare.png" alt="SemaKare" style={{ height: 36 }} />
+      </a>
+      <nav style={{ display: "flex", gap: 6, flex: 1, justifyContent: "center" }}>
+        {items.map(l => (
+          <a key={l.id} href={l.href} style={{
+            padding: "10px 16px", borderRadius: 999, fontSize: 14, fontWeight: 600,
+            color: l.id === active ? "var(--sk-accent)" : "var(--sk-fg)",
+            background: l.id === active ? "var(--sk-purple-100)" : "transparent",
+            textDecoration: "none", transition: "all 120ms ease-out",
+          }}
+          onMouseEnter={e => { if (l.id !== active) e.currentTarget.style.background = "var(--sk-gray-100)"; }}
+          onMouseLeave={e => { if (l.id !== active) e.currentTarget.style.background = "transparent"; }}
+          >{l.label}</a>
+        ))}
+      </nav>
+      <Button variant="ghost" size="sm" icon={<HelpGlyph size={18} />}>Need Help?</Button>
+    </header>
+  );
+}
+
+
+
+function FAQ() {
+  const [open, setOpen] = React.useState(3);
+  const items = [
+    { q: <>Is Semakare<TM /> free?</>, a: "Yes — SemaKare™ is a complimentary support program offered at no cost to patients prescribed Semaglutide." },
+    { q: <>What if I miss a dose?</>, a: "SemaKare™ reminders help you recover gracefully — follow the in-app guidance or chat with your Sema Counsellor." },
+    { q: <>Who can enroll in Semakare<TM />?</>, a: "Adults in India starting or continuing Semaglutide therapy under a physician's care." },
+    { q: <>Is my information safe?</>, a: "Yes. Your data is secure and privacy-protected, following healthcare standards." },
+    { q: <>How do I contact a Sema Counsellor?</>, a: "Call us, tap WhatsApp Quick Answers in the app, or request a diet consult from the Get Support page." },
+  ];
+  return (
+    <section style={{ padding: "90px 72px", background: "#fff" }}>
+      <div style={{ maxWidth: 1200, margin: "0 auto", display: "grid", gridTemplateColumns: "1.1fr 0.9fr", gap: 80, alignItems: "start" }}>
+        <div>
+          <h2 className="sk-h1" style={{ marginBottom: 10 }}>Frequently Asked Questions</h2>
+          <p className="sk-body" style={{ marginBottom: 28 }}>Find answers about enrollment, features, and how Semakare<TM /> supports you.</p>
+          <div style={{ display: "grid", gap: 12 }}>
+            {items.map((it, i) => (
+              <FAQRow key={i} open={open === i} onClick={() => setOpen(open === i ? -1 : i)} q={it.q} a={it.a} />
+            ))}
+          </div>
+        </div>
+        <div style={{ position: "relative" }}>
+          <img src={SK.faqPortrait} alt="" style={{ width: "100%", borderRadius: 24, display: "block" }} />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function FAQRow({ open, onClick, q, a }) {
+  return (
+    <div onClick={onClick} style={{
+      borderRadius: 14, cursor: "pointer",
+      background: open ? "var(--sk-bg-faq)" : "#fff",
+      border: open ? "2px solid var(--sk-blue-500)" : "1px solid var(--sk-border-soft)",
+      padding: open ? "16px 20px" : "18px 20px",
+      transition: "all 150ms ease-out",
+    }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontWeight: 600, fontSize: 14 }}>
+        <span>{q}</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--sk-accent)" strokeWidth="2.5" strokeLinecap="round"
+          style={{ transform: open ? "rotate(180deg)" : "rotate(0)", transition: "transform 150ms" }}>
+          <path d="M6 9l6 6 6-6" />
+        </svg>
+      </div>
+      {open && <div className="sk-body" style={{ fontSize: 13, marginTop: 10 }}>{a}</div>}
+    </div>
+  );
+}
+
+function Footer() {
+  return (
+    <footer style={{ background: "var(--sk-blue-50)", padding: "60px 72px 50px" }}>
+      <div style={{ maxWidth: 1200, margin: "0 auto", display: "grid", gridTemplateColumns: "1.2fr 1fr 1fr", gap: 60 }}>
+        <div>
+          <img src="" alt="SemaKare" style={{ height: 32, marginBottom: 16 }} />
+          <div style={{ fontSize: 13, fontWeight: 500, color: "var(--sk-fg)", marginBottom: 12 }}>Download app from</div>
+          <div style={{ display: "flex", gap: 10 }}>
+            <StoreBadge kind="app" /><StoreBadge kind="play" />
+          </div>
+        </div>
+        <FooterCol title="Get started" items={["How it works", <>About SemaKare<TM /></>, <>Why SemaKare<TM />?</>, "FAQs"]} />
+        <FooterCol title="Resources" items={["Privacy policy", "Terms of service", "Contact us", "Cookie Policy", "Manage Cookie Preferences"]} />
+      </div>
+    </footer>
+  );
+}
+
+function FooterCol({ title, items }) {
+  return (
+    <div>
+      <h5 style={{ fontSize: 14, fontWeight: 700, margin: "0 0 14px", color: "var(--sk-fg)" }}>{title}</h5>
+      <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "grid", gap: 10 }}>
+        {items.map((t, i) => <li key={i}><a style={{ color: "var(--sk-fg-muted)", textDecoration: "none", fontSize: 13, cursor: "pointer" }}>{t}</a></li>)}
+      </ul>
+    </div>
+  );
+}
+
+function StoreBadge({ kind }) {
+  const common = { background: "#0f1424", color: "#fff", borderRadius: 10, padding: "8px 14px", display: "inline-flex", alignItems: "center", gap: 10, fontSize: 11, lineHeight: 1.15 };
+  if (kind === "app") return (
+    <div style={common}>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 12.5c0-2.2 1.8-3.3 1.9-3.4-1-1.5-2.7-1.7-3.3-1.7-1.4-.1-2.7.8-3.4.8-.7 0-1.8-.8-3-.8-1.5 0-3 .9-3.8 2.3-1.6 2.8-.4 6.9 1.2 9.1.8 1.1 1.7 2.3 2.9 2.3 1.2 0 1.6-.8 3-.8s1.8.8 3 .7c1.2 0 2-1.1 2.8-2.2.9-1.3 1.3-2.5 1.3-2.6-.1 0-2.6-1-2.6-3.7M15.3 5.8c.6-.8 1.1-1.9 1-3-.9 0-2 .6-2.7 1.4-.6.7-1.1 1.8-1 2.9 1.1.1 2.1-.5 2.7-1.3" /></svg>
+      <div><div style={{ fontSize: 9, opacity: .7 }}>Download on the</div><div style={{ fontWeight: 600, fontSize: 13 }}>App Store</div></div>
+    </div>
+  );
+  return (
+    <div style={common}>
+      <svg width="16" height="16" viewBox="0 0 24 24"><path d="M3 20V4l12 8-12 8z" fill="#34a853" /><path d="M3 4v16l9-8-9-8z" fill="#4285f4" /><path d="M15 12l-6 6 9-3-3-3z" fill="#fbbc04" /><path d="M15 12l-6-6 9 3-3 3z" fill="#ea4335" /></svg>
+      <div><div style={{ fontSize: 9, opacity: .7 }}>GET IT ON</div><div style={{ fontWeight: 600, fontSize: 13 }}>Google Play</div></div>
+    </div>
+  );
+}
+
+
+
+// Tools.jsx — Health calculators: BMI, Waist-to-Hip Ratio, Ideal Body Weight, Cardiovascular Risk
+
+// ─── Shared form primitives ──────────────────────────────────────────────────
+
+function InputField({ label, placeholder, value, onChange, hint }) {
+  const [focused, setFocused] = React.useState(false);
+  return (
+    <div style={{ marginBottom: 16 }}>
+      <label style={{ display: "block", fontSize: 13, fontWeight: 600, color: "var(--sk-fg)", marginBottom: 6 }}>
+        {label}
+      </label>
+      <input
+        type="number"
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+        onFocus={() => setFocused(true)}
+        onBlur={() => setFocused(false)}
+        style={{
+          width: "100%", padding: "12px 14px", borderRadius: 10,
+          border: `1.5px solid ${focused ? "var(--sk-accent)" : "var(--sk-border-soft)"}`,
+          fontSize: 15, fontFamily: "var(--sk-font-sans)", color: "var(--sk-fg)",
+          outline: "none", background: "#fff", boxSizing: "border-box",
+          transition: "border-color 120ms ease-out",
+        }}
+      />
+      {hint && <div style={{ fontSize: 12, color: "var(--sk-fg-subtle)", marginTop: 4 }}>{hint}</div>}
+    </div>
+  );
+}
+
+function SelectField({ label, value, onChange, options }) {
+  return (
+    <div style={{ marginBottom: 16 }}>
+      <label style={{ display: "block", fontSize: 13, fontWeight: 600, color: "var(--sk-fg)", marginBottom: 6 }}>
+        {label}
+      </label>
+      <div style={{ position: "relative" }}>
+        <select
+          value={value}
+          onChange={onChange}
+          style={{
+            width: "100%", padding: "12px 14px", paddingRight: 40, borderRadius: 10,
+            border: "1.5px solid var(--sk-border-soft)", fontSize: 15,
+            fontFamily: "var(--sk-font-sans)", color: "var(--sk-fg)",
+            outline: "none", background: "#fff", appearance: "none",
+            cursor: "pointer", boxSizing: "border-box",
+          }}
+        >
+          {options.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
+        </select>
+        <svg style={{ position: "absolute", right: 13, top: "50%", transform: "translateY(-50%)", pointerEvents: "none" }}
+          width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--sk-gray-500)" strokeWidth="2" strokeLinecap="round">
+          <path d="M6 9l6 6 6-6" />
+        </svg>
+      </div>
+    </div>
+  );
+}
+
+function CalcButton({ onClick, children }) {
+  return (
+    <button
+      onClick={onClick}
+      style={{
+        width: "100%", padding: "14px 20px", borderRadius: 12, border: "none",
+        background: "var(--sk-accent)", color: "#fff", fontSize: 15, fontWeight: 700,
+        cursor: "pointer", marginTop: 4, fontFamily: "var(--sk-font-sans)",
+        transition: "opacity 120ms ease-out",
+      }}
+      onMouseEnter={e => e.currentTarget.style.opacity = "0.88"}
+      onMouseLeave={e => e.currentTarget.style.opacity = "1"}
+    >
+      {children}
+    </button>
+  );
+}
+
+function EmptyResultCard() {
+  return (
+    <div style={{
+      background: "var(--sk-gray-50)", border: "2px dashed var(--sk-gray-200)",
+      borderRadius: 20, padding: "48px 28px", textAlign: "center",
+      display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+      minHeight: 300,
+    }}>
+      <div style={{
+        width: 56, height: 56, borderRadius: 999, background: "var(--sk-purple-100)",
+        display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 16,
+      }}>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--sk-accent)" strokeWidth="2" strokeLinecap="round">
+          <circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/>
+        </svg>
+      </div>
+      <div style={{ fontWeight: 600, fontSize: 15, color: "var(--sk-fg)", marginBottom: 6 }}>
+        Your result will appear here
+      </div>
+      <div style={{ fontSize: 13, color: "var(--sk-fg-subtle)" }}>
+        Fill in the fields and tap Calculate.
+      </div>
+    </div>
+  );
+}
+
+function CalcDisclaimer() {
+  return (
+    <div style={{
+      marginTop: 20, padding: "12px 16px", borderRadius: 10,
+      background: "var(--sk-blue-50)", border: "1px solid var(--sk-blue-100)",
+      fontSize: 12, color: "var(--sk-fg-subtle)", lineHeight: 1.6,
+    }}>
+      <strong style={{ color: "var(--sk-fg)" }}>For information only.</strong>{" "}
+      These tools are not a substitute for clinical assessment. Always discuss your results with your doctor.
+    </div>
+  );
+}
+
+// ─── BMI Calculator ──────────────────────────────────────────────────────────
+
+function BMIGauge({ bmi }) {
+  // Scale 10–40 = 30 units total
+  // Zones: Underweight 10–18.5 (28.3%), Normal 18.5–23 (15%), Overweight 23–25 (6.7%), Obese I 25–30 (16.7%), Obese II+ 30–40 (33.3%)
+  const zones = [
+    { label: "Underweight", color: "#4da6e8", pct: 28.3 },
+    { label: "Normal",      color: "#2dbf6b", pct: 15.0 },
+    { label: "Overweight",  color: "#f6b93b", pct: 6.7  },
+    { label: "Obese I",     color: "#e8553d", pct: 16.7 },
+    { label: "Obese II+",   color: "#b03020", pct: 33.3 },
+  ];
+  const markerPct = Math.min(100, Math.max(0, ((bmi - 10) / 30) * 100));
+
+  return (
+    <div style={{ marginTop: 20 }}>
+      {/* Zone colour bar */}
+      <div style={{ display: "flex", borderRadius: 999, overflow: "hidden", height: 10, gap: 2 }}>
+        {zones.map(z => (
+          <div key={z.label} style={{ flex: `0 0 ${z.pct}%`, background: z.color }} />
+        ))}
+      </div>
+      {/* Marker line */}
+      <div style={{ position: "relative", height: 20, marginTop: 2 }}>
+        <div style={{
+          position: "absolute", left: `${markerPct}%`, transform: "translateX(-50%)",
+          display: "flex", flexDirection: "column", alignItems: "center",
+        }}>
+          <div style={{ width: 2, height: 14, background: "var(--sk-fg)", borderRadius: 2 }} />
+        </div>
+      </div>
+      {/* Zone labels */}
+      <div style={{ display: "flex", gap: 2, marginTop: 4 }}>
+        {zones.map(z => (
+          <div key={z.label} style={{ flex: `0 0 ${z.pct}%`, fontSize: 9, color: "var(--sk-fg-subtle)", textAlign: "center", overflow: "hidden" }}>
+            {z.label}
+          </div>
+        ))}
+      </div>
+      {/* Scale */}
+      <div style={{ display: "flex", justifyContent: "space-between", marginTop: 4, fontSize: 10, color: "var(--sk-gray-400)" }}>
+        <span>10</span>
+        <span>18.5</span>
+        <span>23</span>
+        <span>25</span>
+        <span>30</span>
+        <span>40</span>
+      </div>
+    </div>
+  );
+}
+
+function BMICalculator() {
+  const [height, setHeight] = React.useState("");
+  const [weight, setWeight] = React.useState("");
+  const [result, setResult] = React.useState(null);
+  const [error, setError]   = React.useState("");
+
+  function calculate() {
+    const h = parseFloat(height);
+    const w = parseFloat(weight);
+    if (!h || !w || h < 50 || h > 250 || w < 20 || w > 400) {
+      setError("Please enter a valid height (50–250 cm) and weight (20–400 kg).");
+      setResult(null);
+      return;
+    }
+    setError("");
+    const bmi = w / Math.pow(h / 100, 2);
+    let cat, color, advice;
+    if (bmi < 18.5) {
+      cat = "Underweight"; color = "#4da6e8";
+      advice = "You may benefit from nutritional support. Discuss with your care team before any dose changes.";
+    } else if (bmi < 23) {
+      cat = "Normal weight"; color = "#2dbf6b";
+      advice = "Great — your BMI is in a healthy range for South Asian adults. Keep up your current habits.";
+    } else if (bmi < 25) {
+      cat = "Overweight"; color = "#f6b93b";
+      advice = "Slightly above the healthy range. SemaKare™ coaching and your Semaglutide therapy can help.";
+    } else if (bmi < 30) {
+      cat = "Obese Class I"; color = "#e8553d";
+      advice = "This range increases cardio-metabolic risk. Your treatment plan and SemaKare™ support are well-timed.";
+    } else {
+      cat = "Obese Class II+"; color = "#b03020";
+      advice = "Significant health risk. Regular check-ins with your doctor are important — your team is here to help.";
+    }
+    setResult({ bmi: bmi.toFixed(1), cat, color, advice });
+  }
+
+  return (
+    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, alignItems: "start" }}>
+      {/* Input card */}
+      <div style={{ background: "var(--sk-bg-card)", borderRadius: 20, padding: 28 }}>
+        <h3 style={{ fontFamily: "var(--sk-font-display)", fontSize: 20, fontWeight: 700, color: "var(--sk-fg)", margin: "0 0 8px" }}>
+          Body Mass Index (BMI)
+        </h3>
+        <p style={{ fontSize: 14, color: "var(--sk-fg-subtle)", lineHeight: 1.6, margin: "0 0 24px" }}>
+          BMI measures weight relative to height. South Asian populations use lower cutoffs (≥23 = overweight, ≥25 = obese) compared to global standards.
+        </p>
+        <InputField label="Height (cm)" placeholder="e.g. 165" value={height} onChange={e => setHeight(e.target.value)} hint="Enter your height without shoes." />
+        <InputField label="Weight (kg)" placeholder="e.g. 70"  value={weight} onChange={e => setWeight(e.target.value)} hint="Enter your current weight." />
+        {error && <div style={{ fontSize: 13, color: "#e8553d", marginBottom: 12 }}>{error}</div>}
+        <CalcButton onClick={calculate}>Calculate BMI</CalcButton>
+        <CalcDisclaimer />
+      </div>
+
+      {/* Result card */}
+      {result ? (
+        <div style={{ background: "#fff", border: "1.5px solid var(--sk-border-soft)", borderRadius: 20, padding: 28 }}>
+          <div style={{ fontSize: 13, color: "var(--sk-fg-subtle)", marginBottom: 6 }}>Your BMI</div>
+          <div style={{
+            fontSize: 76, fontWeight: 700, lineHeight: 1,
+            color: result.color, fontFamily: "var(--sk-font-display)",
+            letterSpacing: "-0.03em", marginBottom: 10,
+          }}>
+            {result.bmi}
+          </div>
+          <span style={{
+            display: "inline-block", padding: "6px 14px", borderRadius: 999,
+            background: result.color + "20", color: result.color,
+            fontWeight: 700, fontSize: 14,
+          }}>{result.cat}</span>
+
+          <BMIGauge bmi={parseFloat(result.bmi)} />
+
+          <p style={{ fontSize: 14, color: "var(--sk-fg)", lineHeight: 1.6, marginTop: 20 }}>
+            {result.advice}
+          </p>
+          <div style={{ marginTop: 16, paddingTop: 16, borderTop: "1px solid var(--sk-border-soft)" }}>
+            <Button variant="ghost" size="sm" icon={<HelpGlyph size={16} />}>Talk to a Sema Counsellor</Button>
+          </div>
+        </div>
+      ) : <EmptyResultCard />}
+    </div>
+  );
+}
+
+// ─── Waist-to-Hip Ratio ──────────────────────────────────────────────────────
+
+function WHRCalculator() {
+  const [waist,  setWaist]  = React.useState("");
+  const [hip,    setHip]    = React.useState("");
+  const [sex,    setSex]    = React.useState("female");
+  const [result, setResult] = React.useState(null);
+  const [error,  setError]  = React.useState("");
+
+  function calculate() {
+    const w = parseFloat(waist);
+    const h = parseFloat(hip);
+    if (!w || !h || w < 40 || w > 200 || h < 50 || h > 250 || h <= w) {
+      setError("Please enter valid waist (40–200 cm) and hip (50–250 cm) measurements. Hip must be larger than waist.");
+      setResult(null);
+      return;
+    }
+    setError("");
+    const ratio = w / h;
+
+    let risk, color, advice;
+    if (sex === "male") {
+      if (ratio < 0.90)      { risk = "Low risk";      color = "#2dbf6b"; advice = "Your ratio indicates a healthy fat distribution pattern."; }
+      else if (ratio < 1.00) { risk = "Moderate risk"; color = "#f6b93b"; advice = "Moderate central fat. Diet and exercise can help improve your ratio."; }
+      else                   { risk = "High risk";      color = "#e8553d"; advice = "Higher central adiposity increases cardio-metabolic risk. Discuss with your doctor."; }
+    } else {
+      if (ratio < 0.80)      { risk = "Low risk";      color = "#2dbf6b"; advice = "Your ratio indicates a healthy fat distribution pattern."; }
+      else if (ratio < 0.85) { risk = "Moderate risk"; color = "#f6b93b"; advice = "Moderate central fat. Diet and exercise can help improve your ratio."; }
+      else                   { risk = "High risk";      color = "#e8553d"; advice = "Higher central adiposity increases cardio-metabolic risk. Discuss with your doctor."; }
+    }
+
+    const healthy = sex === "male" ? "< 0.90" : "< 0.80";
+    setResult({ ratio: ratio.toFixed(2), risk, color, advice, healthy });
+  }
+
+  return (
+    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, alignItems: "start" }}>
+      <div style={{ background: "var(--sk-bg-card)", borderRadius: 20, padding: 28 }}>
+        <h3 style={{ fontFamily: "var(--sk-font-display)", fontSize: 20, fontWeight: 700, color: "var(--sk-fg)", margin: "0 0 8px" }}>
+          Waist-to-Hip Ratio (WHR)
+        </h3>
+        <p style={{ fontSize: 14, color: "var(--sk-fg-subtle)", lineHeight: 1.6, margin: "0 0 24px" }}>
+          WHR measures where your body stores fat. Central (abdominal) fat is a stronger predictor of cardio-metabolic risk than BMI alone.
+        </p>
+        <SelectField label="Sex" value={sex} onChange={e => setSex(e.target.value)} options={[
+          { value: "female", label: "Female" },
+          { value: "male",   label: "Male" },
+        ]} />
+        <InputField label="Waist circumference (cm)" placeholder="e.g. 88"
+          value={waist} onChange={e => setWaist(e.target.value)}
+          hint="Measure at the narrowest point (between ribs and hips)." />
+        <InputField label="Hip circumference (cm)" placeholder="e.g. 100"
+          value={hip} onChange={e => setHip(e.target.value)}
+          hint="Measure at the widest point around the buttocks." />
+        {error && <div style={{ fontSize: 13, color: "#e8553d", marginBottom: 12 }}>{error}</div>}
+        <CalcButton onClick={calculate}>Calculate WHR</CalcButton>
+        <CalcDisclaimer />
+      </div>
+
+      {result ? (
+        <div style={{ background: "#fff", border: "1.5px solid var(--sk-border-soft)", borderRadius: 20, padding: 28 }}>
+          <div style={{ fontSize: 13, color: "var(--sk-fg-subtle)", marginBottom: 6 }}>Your Waist-to-Hip Ratio</div>
+          <div style={{
+            fontSize: 76, fontWeight: 700, lineHeight: 1,
+            color: result.color, fontFamily: "var(--sk-font-display)",
+            letterSpacing: "-0.03em", marginBottom: 10,
+          }}>
+            {result.ratio}
+          </div>
+          <span style={{
+            display: "inline-block", padding: "6px 14px", borderRadius: 999,
+            background: result.color + "20", color: result.color,
+            fontWeight: 700, fontSize: 14,
+          }}>{result.risk}</span>
+
+          {/* Visual bar — 3 zones */}
+          <div style={{ marginTop: 24 }}>
+            <div style={{ display: "flex", borderRadius: 999, overflow: "hidden", height: 10, gap: 2 }}>
+              <div style={{ flex: "0 0 40%", background: "#2dbf6b" }} />
+              <div style={{ flex: "0 0 25%", background: "#f6b93b" }} />
+              <div style={{ flex: "0 0 35%", background: "#e8553d" }} />
+            </div>
+            <div style={{ display: "flex", gap: 2, marginTop: 6, fontSize: 11, color: "var(--sk-fg-subtle)" }}>
+              <div style={{ flex: "0 0 40%", textAlign: "center" }}>Low</div>
+              <div style={{ flex: "0 0 25%", textAlign: "center" }}>Moderate</div>
+              <div style={{ flex: "0 0 35%", textAlign: "center" }}>High</div>
+            </div>
+          </div>
+
+          <div style={{ marginTop: 20, padding: "14px 16px", borderRadius: 12, background: "var(--sk-gray-50)" }}>
+            <div style={{ fontSize: 12, color: "var(--sk-fg-subtle)", marginBottom: 4 }}>Healthy target for you</div>
+            <div style={{ fontSize: 18, fontWeight: 700, color: "var(--sk-fg)" }}>{result.healthy}</div>
+          </div>
+
+          <p style={{ fontSize: 14, color: "var(--sk-fg)", lineHeight: 1.6, marginTop: 16 }}>{result.advice}</p>
+          <div style={{ marginTop: 16, paddingTop: 16, borderTop: "1px solid var(--sk-border-soft)" }}>
+            <Button variant="ghost" size="sm" icon={<HelpGlyph size={16} />}>Talk to a Sema Counsellor</Button>
+          </div>
+        </div>
+      ) : <EmptyResultCard />}
+    </div>
+  );
+}
+
+// ─── Ideal Body Weight ───────────────────────────────────────────────────────
+
+function IBWCalculator() {
+  const [height,  setHeight]  = React.useState("");
+  const [current, setCurrent] = React.useState("");
+  const [sex,     setSex]     = React.useState("female");
+  const [result,  setResult]  = React.useState(null);
+  const [error,   setError]   = React.useState("");
+
+  function calculate() {
+    const h = parseFloat(height);
+    if (!h || h < 100 || h > 250) {
+      setError("Please enter a valid height (100–250 cm).");
+      setResult(null);
+      return;
+    }
+    setError("");
+    // Robinson formula
+    const inchesOver5ft = (h - 152.4) / 2.54;
+    const ibw = sex === "male"
+      ? 52 + 1.9 * inchesOver5ft
+      : 49 + 1.7 * inchesOver5ft;
+    const ibwLow  = Math.max(30, ibw * 0.90);
+    const ibwHigh = ibw * 1.10;
+    const w = parseFloat(current);
+    let comparison = null;
+    if (w && w > 0) {
+      const diff = w - ibw;
+      if (Math.abs(diff) <= ibw * 0.10) {
+        comparison = { label: "Within ideal range", color: "#2dbf6b", diff: null };
+      } else if (diff > 0) {
+        comparison = { label: `${diff.toFixed(1)} kg above ideal`, color: "#e8553d", diff };
+      } else {
+        comparison = { label: `${Math.abs(diff).toFixed(1)} kg below ideal`, color: "#f6b93b", diff };
+      }
+    }
+    setResult({ ibw: ibw.toFixed(1), ibwLow: ibwLow.toFixed(1), ibwHigh: ibwHigh.toFixed(1), comparison });
+  }
+
+  return (
+    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, alignItems: "start" }}>
+      <div style={{ background: "var(--sk-bg-card)", borderRadius: 20, padding: 28 }}>
+        <h3 style={{ fontFamily: "var(--sk-font-display)", fontSize: 20, fontWeight: 700, color: "var(--sk-fg)", margin: "0 0 8px" }}>
+          Ideal Body Weight (IBW)
+        </h3>
+        <p style={{ fontSize: 14, color: "var(--sk-fg-subtle)", lineHeight: 1.6, margin: "0 0 24px" }}>
+          Calculates a healthy weight range for your height using the Robinson formula. This is a goal reference — not a strict target.
+        </p>
+        <SelectField label="Sex" value={sex} onChange={e => setSex(e.target.value)} options={[
+          { value: "female", label: "Female" },
+          { value: "male",   label: "Male" },
+        ]} />
+        <InputField label="Height (cm)" placeholder="e.g. 160" value={height} onChange={e => setHeight(e.target.value)} />
+        <InputField label="Current weight (kg) — optional" placeholder="e.g. 75"
+          value={current} onChange={e => setCurrent(e.target.value)}
+          hint="Enter to see how far you are from the ideal range." />
+        {error && <div style={{ fontSize: 13, color: "#e8553d", marginBottom: 12 }}>{error}</div>}
+        <CalcButton onClick={calculate}>Calculate Ideal Weight</CalcButton>
+        <CalcDisclaimer />
+      </div>
+
+      {result ? (
+        <div style={{ background: "#fff", border: "1.5px solid var(--sk-border-soft)", borderRadius: 20, padding: 28 }}>
+          <div style={{ fontSize: 13, color: "var(--sk-fg-subtle)", marginBottom: 6 }}>Ideal body weight</div>
+          <div style={{
+            fontSize: 76, fontWeight: 700, lineHeight: 1,
+            color: "var(--sk-accent)", fontFamily: "var(--sk-font-display)",
+            letterSpacing: "-0.03em", marginBottom: 6,
+          }}>
+            {result.ibw} <span style={{ fontSize: 28, fontWeight: 500, color: "var(--sk-fg-subtle)" }}>kg</span>
+          </div>
+
+          <div style={{ marginTop: 16, padding: "14px 16px", borderRadius: 12, background: "var(--sk-purple-50)" }}>
+            <div style={{ fontSize: 12, color: "var(--sk-fg-subtle)", marginBottom: 2 }}>Healthy weight range (±10%)</div>
+            <div style={{ fontSize: 22, fontWeight: 700, color: "var(--sk-fg)" }}>
+              {result.ibwLow} – {result.ibwHigh} kg
+            </div>
+          </div>
+
+          {result.comparison && (
+            <div style={{ marginTop: 16, padding: "14px 16px", borderRadius: 12, background: result.comparison.color + "15" }}>
+              <div style={{ fontSize: 13, fontWeight: 700, color: result.comparison.color }}>
+                {result.comparison.label}
+              </div>
+            </div>
+          )}
+
+          <p style={{ fontSize: 13, color: "var(--sk-fg-subtle)", lineHeight: 1.6, marginTop: 16 }}>
+            This is a reference range. Your doctor may set a different personalised target based on your full health picture.
+          </p>
+          <div style={{ marginTop: 16, paddingTop: 16, borderTop: "1px solid var(--sk-border-soft)" }}>
+            <Button variant="ghost" size="sm" icon={<HelpGlyph size={16} />}>Book a Diet Consult</Button>
+          </div>
+        </div>
+      ) : <EmptyResultCard />}
+    </div>
+  );
+}
+
+// ─── Cardiovascular Risk ─────────────────────────────────────────────────────
+
+function CVDRiskGauge({ level }) {
+  const levels = ["Low", "Moderate", "High", "Very High"];
+  const colors = ["#2dbf6b", "#f6b93b", "#e8553d", "#b03020"];
+  const idx = levels.indexOf(level);
+  return (
+    <div style={{ display: "flex", gap: 4, marginTop: 20 }}>
+      {levels.map((l, i) => (
+        <div key={l} style={{ flex: 1 }}>
+          <div style={{
+            height: 8, borderRadius: 4, background: i <= idx ? colors[i] : "var(--sk-gray-200)",
+            transition: "background 300ms ease-out",
+          }} />
+          <div style={{ fontSize: 10, color: i === idx ? colors[i] : "var(--sk-fg-subtle)", textAlign: "center", marginTop: 5, fontWeight: i === idx ? 700 : 400 }}>
+            {l}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function CVDRiskCalculator() {
+  const [age,     setAge]     = React.useState("lt40");
+  const [sex,     setSex]     = React.useState("female");
+  const [bp,      setBp]      = React.useState("normal");
+  const [bpMeds,  setBpMeds]  = React.useState("no");
+  const [smoking, setSmoking] = React.useState("never");
+  const [diabetes,setDiabetes]= React.useState("yes");
+  const [famHist, setFamHist] = React.useState("no");
+  const [result,  setResult]  = React.useState(null);
+
+  function calculate() {
+    let score = 0;
+
+    // Age (men carry higher base risk at younger ages)
+    if (sex === "male") {
+      score += { lt40: 0, "40-49": 3, "50-59": 5, "60-69": 7, "70plus": 8 }[age] ?? 0;
+    } else {
+      score += { lt40: 0, "40-49": 2, "50-59": 4, "60-69": 6, "70plus": 8 }[age] ?? 0;
+    }
+    // Systolic BP
+    score += { normal: 0, elevated: 1, high1: 2, high2: 3 }[bp] ?? 0;
+    // BP meds
+    if (bpMeds === "yes") score += 1;
+    // Smoking
+    score += { never: 0, former: 1, current: 3 }[smoking] ?? 0;
+    // Diabetes
+    if (diabetes === "yes") score += 2;
+    // Family history
+    if (famHist === "yes") score += 1;
+
+    let level, color, pct, advice;
+    if (score <= 3) {
+      level = "Low"; color = "#2dbf6b"; pct = "<10%";
+      advice = "Your estimated 10-year cardiovascular risk is low. Keep up your healthy habits and attend regular check-ups.";
+    } else if (score <= 6) {
+      level = "Moderate"; color = "#f6b93b"; pct = "10–20%";
+      advice = "Moderate risk. Lifestyle changes and managing your existing risk factors can meaningfully reduce this.";
+    } else if (score <= 10) {
+      level = "High"; color = "#e8553d"; pct = "20–30%";
+      advice = "Higher risk. Work closely with your doctor on a comprehensive cardio-protection plan.";
+    } else {
+      level = "Very High"; color = "#b03020"; pct = ">30%";
+      advice = "Very high risk. Discuss urgent risk-reduction strategies with your doctor — do not delay.";
+    }
+
+    const factors = [];
+    if (age !== "lt40") factors.push("Age");
+    if (bp !== "normal") factors.push("Blood pressure");
+    if (bpMeds === "yes") factors.push("On BP medication");
+    if (smoking !== "never") factors.push(smoking === "current" ? "Current smoker" : "Former smoker");
+    if (diabetes === "yes") factors.push("Diabetes");
+    if (famHist === "yes") factors.push("Family history");
+
+    setResult({ level, color, pct, advice, score, factors });
+  }
+
+  return (
+    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, alignItems: "start" }}>
+      <div style={{ background: "var(--sk-bg-card)", borderRadius: 20, padding: 28 }}>
+        <h3 style={{ fontFamily: "var(--sk-font-display)", fontSize: 20, fontWeight: 700, color: "var(--sk-fg)", margin: "0 0 8px" }}>
+          Cardiovascular Risk
+        </h3>
+        <p style={{ fontSize: 14, color: "var(--sk-fg-subtle)", lineHeight: 1.6, margin: "0 0 24px" }}>
+          A simplified assessment of your 10-year cardiovascular risk based on key risk factors. Answer 7 quick questions.
+        </p>
+        <SelectField label="Age group" value={age} onChange={e => setAge(e.target.value)} options={[
+          { value: "lt40",   label: "Under 40" },
+          { value: "40-49",  label: "40 – 49" },
+          { value: "50-59",  label: "50 – 59" },
+          { value: "60-69",  label: "60 – 69" },
+          { value: "70plus", label: "70 or above" },
+        ]} />
+        <SelectField label="Sex" value={sex} onChange={e => setSex(e.target.value)} options={[
+          { value: "female", label: "Female" },
+          { value: "male",   label: "Male" },
+        ]} />
+        <SelectField label="Systolic blood pressure" value={bp} onChange={e => setBp(e.target.value)} options={[
+          { value: "normal",   label: "Normal (< 120 mmHg)" },
+          { value: "elevated", label: "Elevated (120–139 mmHg)" },
+          { value: "high1",    label: "High Stage 1 (140–159 mmHg)" },
+          { value: "high2",    label: "High Stage 2 (≥ 160 mmHg)" },
+        ]} />
+        <SelectField label="Currently taking blood pressure medication?" value={bpMeds} onChange={e => setBpMeds(e.target.value)} options={[
+          { value: "no",  label: "No" },
+          { value: "yes", label: "Yes" },
+        ]} />
+        <SelectField label="Smoking status" value={smoking} onChange={e => setSmoking(e.target.value)} options={[
+          { value: "never",   label: "Never smoked" },
+          { value: "former",  label: "Former smoker (quit > 1 yr)" },
+          { value: "current", label: "Current smoker" },
+        ]} />
+        <SelectField label="Diagnosed with diabetes?" value={diabetes} onChange={e => setDiabetes(e.target.value)} options={[
+          { value: "yes", label: "Yes" },
+          { value: "no",  label: "No" },
+        ]} />
+        <SelectField label="Family history of heart disease?" value={famHist} onChange={e => setFamHist(e.target.value)} options={[
+          { value: "no",  label: "No" },
+          { value: "yes", label: "Yes — parent or sibling before age 65" },
+        ]} />
+        <CalcButton onClick={calculate}>Assess My Risk</CalcButton>
+        <CalcDisclaimer />
+      </div>
+
+      {result ? (
+        <div style={{ background: "#fff", border: "1.5px solid var(--sk-border-soft)", borderRadius: 20, padding: 28 }}>
+          <div style={{ fontSize: 13, color: "var(--sk-fg-subtle)", marginBottom: 6 }}>
+            Estimated 10-year cardiovascular risk
+          </div>
+          <div style={{
+            fontSize: 72, fontWeight: 700, lineHeight: 1,
+            color: result.color, fontFamily: "var(--sk-font-display)",
+            letterSpacing: "-0.03em", marginBottom: 6,
+          }}>
+            {result.pct}
+          </div>
+          <span style={{
+            display: "inline-block", padding: "6px 14px", borderRadius: 999,
+            background: result.color + "20", color: result.color,
+            fontWeight: 700, fontSize: 14,
+          }}>{result.level} risk</span>
+
+          <CVDRiskGauge level={result.level} />
+
+          {result.factors.length > 0 && (
+            <div style={{ marginTop: 20 }}>
+              <div style={{ fontSize: 12, color: "var(--sk-fg-subtle)", marginBottom: 8 }}>Contributing risk factors</div>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                {result.factors.map(f => (
+                  <span key={f} style={{
+                    padding: "5px 10px", borderRadius: 999, fontSize: 12, fontWeight: 600,
+                    background: "var(--sk-gray-100)", color: "var(--sk-fg)",
+                  }}>{f}</span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <p style={{ fontSize: 14, color: "var(--sk-fg)", lineHeight: 1.6, marginTop: 20 }}>{result.advice}</p>
+          <div style={{ marginTop: 16, paddingTop: 16, borderTop: "1px solid var(--sk-border-soft)" }}>
+            <Button variant="ghost" size="sm" icon={<HelpGlyph size={16} />}>Talk to a Sema Counsellor</Button>
+          </div>
+        </div>
+      ) : <EmptyResultCard />}
+    </div>
+  );
+}
+
+// ─── Tools Page ──────────────────────────────────────────────────────────────
+
+const TABS = [
+  { id: "bmi", label: "BMI",                 sub: "Body Mass Index" },
+  { id: "whr", label: "Waist-to-Hip",        sub: "WHR & Abdominal Fat" },
+  { id: "ibw", label: "Ideal Weight",        sub: "IBW Calculator" },
+  { id: "cvd", label: "Cardiovascular Risk", sub: "10-Year Risk Score" },
+];
+
+function ToolsPage() {
+  const [activeTab, setActiveTab] = React.useState("bmi");
+
+  return (
+    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
+      <InnerHeader active="tools" />
+
+      {/* Page hero */}
+      <section style={{
+        background: "linear-gradient(170deg, var(--sk-blue-50) 0%, #fff 100%)",
+        padding: "72px 120px 60px", textAlign: "center",
+      }}>
+        <Eyebrow style={{ justifyContent: "center", marginBottom: 16 }}>Health Tools</Eyebrow>
+        <h1 style={{
+          fontFamily: "var(--sk-font-display)", fontSize: 52, fontWeight: 700,
+          color: "var(--sk-fg)", letterSpacing: "-0.03em",
+          margin: "0 0 20px", lineHeight: 1.1,
+        }}>
+          Know your numbers.<br />Take control.
+        </h1>
+        <p style={{ fontSize: 18, color: "var(--sk-fg-subtle)", lineHeight: 1.6, maxWidth: 580, margin: "0 auto" }}>
+          Free health calculators designed for people managing obesity, diabetes, and metabolic health — using Indian-specific cutoffs where they matter.
+        </p>
+      </section>
+
+      {/* Calculator section */}
+      <section style={{ flex: 1, padding: "60px 120px 80px", background: "#fff" }}>
+        {/* Tab strip */}
+        <div style={{
+          display: "flex", gap: 8, marginBottom: 40,
+          borderBottom: "1.5px solid var(--sk-border-soft)", paddingBottom: 0,
+        }}>
+          {TABS.map(t => {
+            const active = t.id === activeTab;
+            return (
+              <button key={t.id} onClick={() => setActiveTab(t.id)}
+                style={{
+                  padding: "14px 22px", border: "none", background: "transparent",
+                  cursor: "pointer", fontFamily: "var(--sk-font-sans)",
+                  borderBottom: active ? "2.5px solid var(--sk-accent)" : "2.5px solid transparent",
+                  marginBottom: -1.5,
+                  transition: "all 120ms ease-out",
+                }}
+              >
+                <div style={{ fontSize: 14, fontWeight: 700, color: active ? "var(--sk-accent)" : "var(--sk-fg)" }}>
+                  {t.label}
+                </div>
+                <div style={{ fontSize: 11, color: active ? "var(--sk-accent)" : "var(--sk-fg-subtle)", marginTop: 2 }}>
+                  {t.sub}
+                </div>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Active calculator */}
+        {activeTab === "bmi" && <BMICalculator />}
+        {activeTab === "whr" && <WHRCalculator />}
+        {activeTab === "ibw" && <IBWCalculator />}
+        {activeTab === "cvd" && <CVDRiskCalculator />}
+      </section>
+
+      {/* CTA band */}
+      <section style={{
+        background: "var(--sk-purple-100)", padding: "52px 120px",
+        display: "flex", alignItems: "center", justifyContent: "space-between",
+      }}>
+        <div>
+          <div style={{ fontSize: 24, fontWeight: 700, fontFamily: "var(--sk-font-display)", color: "var(--sk-fg)", marginBottom: 8 }}>
+            Want to make sense of your results?
+          </div>
+          <div style={{ fontSize: 16, color: "var(--sk-fg-subtle)" }}>
+            A SemaKare™ Counsellor can walk you through what your numbers mean and what to do next.
+          </div>
+        </div>
+        <Button variant="primary" size="lg" icon={<WhatsAppGlyph size={20} />}>
+          Chat on WhatsApp
+        </Button>
+      </section>
+
+      <Footer />
+    </div>
+  );
+}
+
+function App() { return <ToolsPage />; }
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+
+</script>
+</body>
+</html>

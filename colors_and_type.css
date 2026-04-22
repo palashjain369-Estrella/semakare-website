@@ -1,0 +1,158 @@
+/* =========================================================
+   Semakare Design System — colors & type tokens
+   Import this file wherever design tokens are needed.
+   ========================================================= */
+
+/* Fonts — DM Sans chosen as closest Google-Fonts match for the
+   rounded, humanist geometric sans used in the Semakare reference.
+   Flagged to user: true brand font file not provided. */
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&display=swap");
+
+:root {
+  /* ---------- Brand palette ---------- */
+  --sk-purple-950: #2a0e6e;   /* deepest — hover / pressed */
+  --sk-purple-900: #3a1687;   /* primary button fill */
+  --sk-purple-800: #431f94;   /* headline purple, primary brand */
+  --sk-purple-700: #5a2fb5;   /* logo letter fill */
+  --sk-purple-600: #7a4ed0;   /* accent on chips / illustrations */
+  --sk-purple-300: #c3b2ea;   /* soft blob / decoration */
+  --sk-purple-100: #ede8f7;   /* faint tint background */
+
+  --sk-blue-600:   #2f8fd4;   /* "Simpler" accent */
+  --sk-blue-500:   #4da6e8;   /* link / info accent */
+  --sk-blue-300:   #a7d4f3;   /* soft blob */
+  --sk-blue-100:   #e4eef6;   /* section wash (alt) */
+  --sk-blue-50:    #eaf6ff;   /* section wash / footer */
+
+  --sk-teal-400:   #29c3c3;   /* data / progress-good */
+  --sk-green-500:  #2dbf6b;   /* WhatsApp / success */
+  --sk-amber-500:  #f6b93b;   /* warning / partial */
+  --sk-red-500:    #e8553d;   /* missed / alert */
+
+  /* ---------- Neutrals ---------- */
+  --sk-ink:        #0f1424;   /* strongest text */
+  --sk-ink-2:      #1a2136;   /* body heading */
+  --sk-gray-700:   #4a5165;   /* body copy */
+  --sk-gray-500:   #6b7280;   /* secondary copy */
+  --sk-gray-400:   #9aa0ae;   /* tertiary / placeholder */
+  --sk-gray-300:   #d4d6dd;   /* hairline borders */
+  --sk-gray-200:   #e4e5ea;   /* card outline */
+  --sk-gray-150:   #eceaef;   /* feature card fill (warm gray) */
+  --sk-gray-100:   #f3f4f7;   /* surface alt */
+  --sk-gray-50:    #f8f9fb;   /* page alt */
+  --sk-white:      #ffffff;
+
+  /* ---------- Semantic roles ---------- */
+  --sk-bg:               var(--sk-white);
+  --sk-bg-soft:          var(--sk-blue-50);     /* big section wash */
+  --sk-bg-card:          var(--sk-gray-150);    /* warm neutral feature card */
+  --sk-bg-faq:           var(--sk-blue-50);     /* expanded FAQ fill */
+  --sk-fg:               var(--sk-ink);
+  --sk-fg-muted:         var(--sk-gray-700);
+  --sk-fg-subtle:        var(--sk-gray-500);
+  --sk-accent:           var(--sk-purple-800);
+  --sk-accent-strong:    var(--sk-purple-900);
+  --sk-accent-pressed:   var(--sk-purple-950);
+  --sk-link:             var(--sk-blue-500);
+  --sk-border:           var(--sk-gray-300);
+  --sk-border-soft:      var(--sk-gray-200);
+
+  /* ---------- Radii ---------- */
+  --sk-r-xs: 6px;
+  --sk-r-sm: 10px;
+  --sk-r-md: 16px;
+  --sk-r-lg: 20px;
+  --sk-r-xl: 28px;
+  --sk-r-2xl: 36px;
+  --sk-r-pill: 999px;
+
+  /* ---------- Shadows ---------- */
+  --sk-shadow-xs:   0 1px 2px rgba(15,20,36,0.05);
+  --sk-shadow-sm:   0 2px 6px rgba(15,20,36,0.06);
+  --sk-shadow-md:   0 8px 24px rgba(15,20,36,0.08);
+  --sk-shadow-lg:   0 20px 50px rgba(67,31,148,0.12);
+  --sk-shadow-btn:  0 8px 22px rgba(67,31,148,0.28);
+
+  /* ---------- Spacing scale (4-pt) ---------- */
+  --sk-s-1: 4px;
+  --sk-s-2: 8px;
+  --sk-s-3: 12px;
+  --sk-s-4: 16px;
+  --sk-s-5: 20px;
+  --sk-s-6: 24px;
+  --sk-s-8: 32px;
+  --sk-s-10: 40px;
+  --sk-s-12: 48px;
+  --sk-s-16: 64px;
+  --sk-s-20: 80px;
+  --sk-s-24: 96px;
+
+  /* ---------- Type tokens ---------- */
+  --sk-font-sans: "DM Sans", "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --sk-font-display: "DM Sans", "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --sk-fs-display: clamp(40px, 4.4vw, 60px);
+  --sk-fs-h1: clamp(34px, 3.4vw, 48px);
+  --sk-fs-h2: clamp(28px, 2.6vw, 38px);
+  --sk-fs-h3: 24px;
+  --sk-fs-h4: 20px;
+  --sk-fs-body-lg: 18px;
+  --sk-fs-body: 16px;
+  --sk-fs-body-sm: 15px;
+  --sk-fs-caption: 13px;
+  --sk-fs-micro: 12px;
+
+  --sk-lh-tight: 1.1;
+  --sk-lh-snug: 1.25;
+  --sk-lh-body: 1.55;
+  --sk-lh-loose: 1.7;
+
+  --sk-tracking-tight: -0.015em;
+  --sk-tracking-normal: 0;
+  --sk-tracking-wide: 0.04em;
+}
+
+/* =========================================================
+   Semantic type classes — use these instead of raw tokens
+   ========================================================= */
+html {
+  font-family: var(--sk-font-sans);
+  color: var(--sk-fg);
+  -webkit-font-smoothing: antialiased;
+}
+
+.sk-display,
+.sk-h1, .sk-h2, .sk-h3, .sk-h4 {
+  font-family: var(--sk-font-display);
+  color: var(--sk-fg);
+  letter-spacing: var(--sk-tracking-tight);
+  line-height: var(--sk-lh-tight);
+  font-weight: 700;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.sk-display  { font-size: var(--sk-fs-display); font-weight: 700; }
+.sk-h1       { font-size: var(--sk-fs-h1); }
+.sk-h2       { font-size: var(--sk-fs-h2); }
+.sk-h3       { font-size: var(--sk-fs-h3); line-height: var(--sk-lh-snug); }
+.sk-h4       { font-size: var(--sk-fs-h4); line-height: var(--sk-lh-snug); font-weight: 600; }
+
+.sk-eyebrow {
+  font-size: var(--sk-fs-caption);
+  color: var(--sk-fg-subtle);
+  font-weight: 500;
+  letter-spacing: var(--sk-tracking-wide);
+  text-transform: none;
+}
+
+.sk-lead     { font-size: var(--sk-fs-body-lg); line-height: var(--sk-lh-body); color: var(--sk-fg-muted); }
+.sk-body     { font-size: var(--sk-fs-body); line-height: var(--sk-lh-body); color: var(--sk-fg-muted); }
+.sk-body-sm  { font-size: var(--sk-fs-body-sm); line-height: var(--sk-lh-body); color: var(--sk-fg-muted); }
+.sk-caption  { font-size: var(--sk-fs-caption); line-height: 1.4; color: var(--sk-fg-subtle); }
+.sk-micro    { font-size: var(--sk-fs-micro); line-height: 1.4; color: var(--sk-fg-subtle); }
+
+/* Inline utilities frequently needed in hero/section copy */
+.sk-accent-text  { color: var(--sk-accent); }
+.sk-accent-blue  { color: var(--sk-blue-600); }
+.sk-trademark    { font-size: 0.55em; vertical-align: super; font-weight: 600; margin-left: 1px; }
