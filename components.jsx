@@ -2,14 +2,14 @@
 // Exposed on window so sibling <script type="text/babel"> files can use them.
 
 const SK = {
-  logo: "../../assets/logo-semakare.png",
-  hero: "../../assets/hero-cyclist.png",
-  phoneDiary: "../../assets/phone-diary.png",
-  peopleGrid: "../../assets/people-grid.png",
-  iphone14: "../../assets/iphone-14-diary.png",
-  iphone16: "../../assets/iphone-16-streak.png",
-  virtualAssistant: "../../assets/virtual-assistant.png",
-  faqPortrait: "../../assets/faq-portrait.png",
+  logo: "assets/logo-semakare.png",
+  hero: "assets/hero-cyclist.png",
+  phoneDiary: "assets/phone-diary.png",
+  peopleGrid: "assets/people-grid.png",
+  iphone14: "assets/iphone-14-diary.png",
+  iphone16: "assets/iphone-16-streak.png",
+  virtualAssistant: "assets/virtual-assistant.png",
+  faqPortrait: "assets/faq-portrait.png",
 };
 
 function TM() {
@@ -135,6 +135,69 @@ function FlowerMedal({ size = 44 }) {
   );
 }
 
+// ─── Phone number modal — shown when user clicks any "Call Now" CTA ──────────
+function CallModal({ number, label, hours, onClose }) {
+  return (
+    <div onClick={onClose} style={{
+      position: "fixed", inset: 0, zIndex: 200,
+      background: "rgba(15,20,36,0.55)", backdropFilter: "blur(4px)",
+      display: "flex", alignItems: "center", justifyContent: "center",
+    }}>
+      <div onClick={e => e.stopPropagation()} style={{
+        background: "#fff", borderRadius: 24, padding: "40px 44px",
+        width: 400, boxShadow: "0 24px 60px rgba(15,20,36,0.2)", textAlign: "center",
+      }}>
+        <div style={{ fontSize: 13, color: "var(--sk-fg-subtle)", marginBottom: 10 }}>{label}</div>
+        <div style={{
+          fontSize: 38, fontWeight: 800, color: "var(--sk-accent)",
+          fontFamily: "var(--sk-font-display)", letterSpacing: "-0.02em", marginBottom: 8,
+        }}>{number}</div>
+        <div style={{
+          display: "inline-block", padding: "6px 14px", borderRadius: 999,
+          background: "var(--sk-green-500)" + "18", color: "var(--sk-green-500)",
+          fontSize: 13, fontWeight: 600, marginBottom: 28,
+        }}>{hours}</div>
+        <div style={{ display: "flex", gap: 10, justifyContent: "center" }}>
+          <a href={`tel:${number.replace(/[-\s]/g, "")}`} style={{ textDecoration: "none" }}>
+            <button style={{
+              display: "flex", alignItems: "center", gap: 8,
+              padding: "13px 24px", borderRadius: 999, border: "none",
+              background: "var(--sk-accent)", color: "#fff",
+              fontSize: 15, fontWeight: 700, cursor: "pointer",
+              fontFamily: "var(--sk-font-sans)",
+            }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.8 12.07 19.79 19.79 0 0 1 1.76 3.48 2 2 0 0 1 3.74 1.3h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l1.06-1.06a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.73 16z"/>
+              </svg>
+              Tap to Call
+            </button>
+          </a>
+          <button onClick={onClose} style={{
+            padding: "13px 20px", borderRadius: 999,
+            border: "1.5px solid var(--sk-border-soft)", background: "#fff",
+            fontSize: 15, fontWeight: 600, cursor: "pointer",
+            color: "var(--sk-fg)", fontFamily: "var(--sk-font-sans)",
+          }}>Close</button>
+        </div>
+        <div style={{ fontSize: 12, color: "var(--sk-fg-subtle)", marginTop: 16 }}>
+          Toll-free · Works from all networks across India
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Reusable "Call Now" button that triggers the modal
+function CallNowButton({ number, label, hours, variant = "primary", size = "lg" }) {
+  const [open, setOpen] = React.useState(false);
+  return (
+    <>
+      <Button variant={variant} size={size} onClick={() => setOpen(true)}>Call Now</Button>
+      {open && <CallModal number={number} label={label} hours={hours} onClose={() => setOpen(false)} />}
+    </>
+  );
+}
+
 // Sticky white header for inner pages (Tools, Affordability, Get Support, HCP-derived)
 function InnerHeader({ active = "home" }) {
   const items = [
@@ -151,7 +214,7 @@ function InnerHeader({ active = "home" }) {
       position: "sticky", top: 0, zIndex: 20,
     }}>
       <a href="index.html" style={{ display: "inline-flex", flexShrink: 0 }}>
-        <img src="../../assets/logo-semakare.png" alt="SemaKare" style={{ height: 36 }} />
+        <img src="assets/logo-semakare.png" alt="SemaKare" style={{ height: 36 }} />
       </a>
       <nav style={{ display: "flex", gap: 6, flex: 1, justifyContent: "center" }}>
         {items.map(l => (
@@ -171,4 +234,4 @@ function InnerHeader({ active = "home" }) {
   );
 }
 
-Object.assign(window, { SK, TM, Brand, ArrowUR, WhatsAppGlyph, HelpGlyph, Button, Eyebrow, PillarIcon, FlowerMedal, InnerHeader });
+Object.assign(window, { SK, TM, Brand, ArrowUR, WhatsAppGlyph, HelpGlyph, Button, Eyebrow, PillarIcon, FlowerMedal, CallModal, CallNowButton, InnerHeader });

@@ -1,5 +1,8 @@
 // Affordability.jsx — PAP, Insurance Navigation, Home Delivery
 
+const PAP_NUMBER = "1800-XXX-0003"; // Replace with actual PAP helpline number
+const PAP_HOURS  = "Mon–Sat, 10am–7pm IST";
+
 function CheckItem({ children }) {
   return (
     <div style={{ display: "flex", gap: 12, alignItems: "flex-start", marginBottom: 12 }}>
@@ -74,7 +77,11 @@ function PAPSection() {
             <CheckItem>Do not have insurance that fully covers your treatment cost</CheckItem>
             <CheckItem>Are a resident of India and a citizen</CheckItem>
           </div>
-          <Button variant="primary" size="lg">Check Your Eligibility</Button>
+          <CallNowButton
+            number={PAP_NUMBER}
+            label="Patient Assistance Program Helpline"
+            hours={PAP_HOURS}
+          />
           <p style={{ fontSize: 12, color: "var(--sk-fg-subtle)", marginTop: 12 }}>
             A Sema Counsellor will guide you through the full application. No paperwork hassle.
           </p>
@@ -260,7 +267,7 @@ function HomeDeliverySection() {
           Delivered to your door.<br />Never miss a refill.
         </h2>
         <p style={{ fontSize: 16, color: "var(--sk-fg-subtle)", lineHeight: 1.7, maxWidth: 520, margin: "0 auto" }}>
-          Order Semared through our trusted pharmacy partners. SemaKare™ integrates with their platforms to send you a refill reminder before you run out.
+          Order Semared through our trusted pharmacy partners — with fast delivery, genuine medicines, and competitive pricing across India.
         </p>
       </div>
 
@@ -293,30 +300,6 @@ function HomeDeliverySection() {
         />
       </div>
 
-      {/* Refill reminder callout */}
-      <div style={{
-        maxWidth: 800, margin: "0 auto", padding: "28px 36px", borderRadius: 20,
-        background: "var(--sk-purple-100)", border: "1.5px solid var(--sk-purple-200)",
-        display: "flex", alignItems: "center", gap: 24,
-      }}>
-        <div style={{
-          width: 52, height: 52, borderRadius: 999, background: "var(--sk-accent)",
-          display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
-        }}>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round">
-            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>
-          </svg>
-        </div>
-        <div style={{ flex: 1 }}>
-          <div style={{ fontWeight: 700, fontSize: 16, color: "var(--sk-fg)", marginBottom: 4 }}>
-            Never run out mid-cycle
-          </div>
-          <div style={{ fontSize: 14, color: "var(--sk-fg-subtle)", lineHeight: 1.6 }}>
-            SemaKare™ sends a WhatsApp reminder 5 days before your next dose is due — so you always have time to reorder.
-          </div>
-        </div>
-        <Button variant="ghost" size="sm" icon={<WhatsAppGlyph size={16} />}>Enable Reminders</Button>
-      </div>
     </section>
   );
 }

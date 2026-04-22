@@ -1,5 +1,15 @@
 // GetSupport.jsx — Sema Counsellor, WhatsApp Quick Answers, Diet Consulting
 
+// ── Replace these two values once you have them ──────────────────────────────
+const WA_LINK = "https://onelink.to/REPLACE_ME"; // your actual onelink.to URL
+const WA_QR   = "assets/wa-qr.png";              // your QR code image (add to assets/ folder)
+// ─────────────────────────────────────────────────────────────────────────────
+
+const COUNSELLOR_NUMBER  = "1800-XXX-0001"; // Replace with actual toll-free number
+const COUNSELLOR_HOURS   = "Mon–Sat, 10am–7pm IST";
+const DIET_NUMBER        = "1800-XXX-0002"; // Replace with actual toll-free number
+const DIET_HOURS         = "Mon–Sat, 10am–7pm IST";
+
 function SupportEyebrow({ children }) {
   return (
     <div style={{
@@ -66,10 +76,11 @@ function CounsellorSection() {
             <SupportBullet>Staying motivated through weight-loss plateaus</SupportBullet>
             <SupportBullet>Coordinating with your doctor when needed</SupportBullet>
           </div>
-          <div style={{ display: "flex", gap: 12 }}>
-            <Button variant="primary" size="lg">Call Now</Button>
-            <Button variant="ghost" size="lg">Request Callback</Button>
-          </div>
+          <CallNowButton
+            number={COUNSELLOR_NUMBER}
+            label="Sema Counsellor Helpline"
+            hours={COUNSELLOR_HOURS}
+          />
         </div>
 
         {/* Right: availability card */}
@@ -98,28 +109,6 @@ function CounsellorSection() {
             ))}
           </div>
 
-          {/* Callback card */}
-          <div style={{
-            background: "var(--sk-purple-100)", borderRadius: 20, padding: 24,
-            display: "flex", gap: 16, alignItems: "center",
-          }}>
-            <div style={{
-              width: 44, height: 44, borderRadius: 999, background: "var(--sk-accent)",
-              display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
-            }}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round">
-                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.8 12.07 19.79 19.79 0 0 1 1.76 3.48 2 2 0 0 1 3.74 1.3h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l1.06-1.06a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.73 16z"/>
-              </svg>
-            </div>
-            <div>
-              <div style={{ fontWeight: 700, fontSize: 14, color: "var(--sk-fg)", marginBottom: 4 }}>
-                Can't call right now?
-              </div>
-              <div style={{ fontSize: 13, color: "var(--sk-fg-subtle)" }}>
-                Leave your number and we'll call you back within 2 hours.
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </section>
@@ -207,18 +196,45 @@ function WhatsAppSection() {
               {WA_TOPICS.map(t => <TopicChip key={t}>{t}</TopicChip>)}
             </div>
           </div>
-          <button style={{
-            display: "flex", alignItems: "center", gap: 10, padding: "14px 24px",
-            borderRadius: 12, border: "none", background: "#fff", color: "#1ebe5d",
-            fontSize: 15, fontWeight: 700, cursor: "pointer", fontFamily: "var(--sk-font-sans)",
-            transition: "opacity 120ms ease-out",
-          }}
-          onMouseEnter={e => e.currentTarget.style.opacity = "0.9"}
-          onMouseLeave={e => e.currentTarget.style.opacity = "1"}
-          >
-            <WhatsAppGlyph size={20} color="#1ebe5d" />
-            Chat on WhatsApp
-          </button>
+          <div style={{ display: "flex", gap: 20, alignItems: "center", flexWrap: "wrap" }}>
+            <a href={WA_LINK} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
+              <button style={{
+                display: "flex", alignItems: "center", gap: 10, padding: "14px 24px",
+                borderRadius: 12, border: "none", background: "#fff", color: "#1ebe5d",
+                fontSize: 15, fontWeight: 700, cursor: "pointer", fontFamily: "var(--sk-font-sans)",
+                transition: "opacity 120ms ease-out",
+              }}
+              onMouseEnter={e => e.currentTarget.style.opacity = "0.9"}
+              onMouseLeave={e => e.currentTarget.style.opacity = "1"}
+              >
+                <WhatsAppGlyph size={20} />
+                Chat on WhatsApp
+              </button>
+            </a>
+            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <div style={{
+                width: 1, height: 36, background: "rgba(255,255,255,0.3)",
+              }} />
+              <div style={{ textAlign: "center" }}>
+                <div style={{ fontSize: 11, color: "rgba(255,255,255,0.7)", marginBottom: 6 }}>
+                  Scan QR to open on phone
+                </div>
+                <div style={{
+                  width: 72, height: 72, borderRadius: 10, background: "#fff",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  overflow: "hidden",
+                }}>
+                  <img src={WA_QR} alt="WhatsApp QR"
+                    style={{ width: "100%", height: "100%", objectFit: "contain" }}
+                    onError={e => {
+                      e.currentTarget.style.display = "none";
+                      e.currentTarget.parentElement.innerHTML = '<div style="font-size:10px;color:#888;padding:4px;text-align:center">QR coming soon</div>';
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -268,7 +284,11 @@ function DietSection() {
               </div>
             ))}
           </div>
-          <Button variant="primary" size="lg">Book a Diet Consult</Button>
+          <CallNowButton
+            number={DIET_NUMBER}
+            label="Diet Consulting Helpline"
+            hours={DIET_HOURS}
+          />
         </div>
 
         {/* Right: consult card */}
@@ -313,7 +333,7 @@ function DietSection() {
                 First consult is complimentary
               </div>
               <div style={{ fontSize: 13, color: "var(--sk-fg-subtle)" }}>
-                Free for all SemaKare™-registered patients. Book via WhatsApp or your Counsellor.
+                Free for all SemaKare™-registered patients. Call the helpline to schedule.
               </div>
             </div>
           </div>
